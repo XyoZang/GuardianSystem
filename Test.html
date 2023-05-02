@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>健康监测平台</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <link rel="stylesheet" href="main.css">
+</head>
+<style>
+</style>
+<body>
+
+<div id="formRegist" style="display:none">
+    <form method="post" action="regist.php">
+            <h1>用户注册</h1>
+            <h3>家属信息录入</h3>
+            <label for="text">家属姓名:</label>
+            <input type="text" id="jiashuname" name="jiashuname" required>
+            <label for="jiashuID">身份证号:</label>
+            <input type="text" id="jiashuID" name="jiashuID" required>
+            <label for="jiashuxingbie">性别:</label>
+            <label for="jiashuxingbie">男</label>
+            <input type="radio" id="jiashuxingbie" name="jiashuxingbie" value="男" required>
+            <label for="jiashuxingbie">女</label>
+            <input type="radio" id="jiashuxingbie" name="jiashuxingbie" value="女" required>
+            <label for="jiashudianhua">电话:</label>
+            <input type="text" id="jiashudianhua" name="jiashudianhua" required>
+            <label for="xueyuanguanxi">血缘关系:</label>
+            <input type="text" id="xueyuanguanxi" name="xueyuanguanxi" required>
+            <label for="password">设置密码(输入任意的数字组合):</label>
+            <input type="password" id="password" name="password" required>
+            <h3>被监护人信息录入</h3>
+            <label for="laorenname">姓名:</label>
+            <input type="text" id="laorenname" name="laorenname" required>
+            <label for="laorenxingbie">性别:</label>
+            <label for="laorenxingbie">男</label>
+            <input type="radio" id="laorenxingbie" name="laorenxingbie" value="男" required>
+            <label for="laorenxingbie">女</label>
+            <input type="radio" id="laorenxingbie" name="laorenxingbie" value="女" required>
+            <label for="laorenage">年龄:</label>
+            <input type="text" id="laorenage" name="laorenage" required>
+            <label for="laorenID">身份证号:</label>
+            <input type="text" id="laorenID" name="laorenID" required>
+            <label for="laorendianhua">电话:</label>
+            <input type="text" id="laorendianhua" name="laorendianhua" required>
+            <button type="submit" name=“submitRegist”>提交</button>
+            <a href="Test.html?p=Login" class="hrefButton">已有帐号，点此去登录</a>
+    </form>B
+</div>
+
+<div id="formLogin" style="display:none">
+    <form method="post" action="login.php">
+            <h1>登录平台</h1>
+            <h3>家属身份验证</h3>
+            <label>家属姓名:</label>
+            <input type="text" id="jiashuname" name="jiashuname" required>
+            <label for="jiashuID">身份证号:</label>
+            <input type="text" id="jiashuID" name="jiashuID" required>
+            <label for="password">登录密码:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit" name=“submitLogin”>登录</button>
+            <a href="Test.html?p=Regist" class="hrefButton">还没有账号？点此去注册</a>
+    </form>
+</div>
+
+<script>
+    if (getQueryVariable("p")) {
+        var p = getQueryVariable("p");
+    } else {
+        var p = 'Regist';
+    }
+    if (p == 'Regist') {
+        document.getElementById("formRegist").style.display='block';
+    } else if (p == 'Login'){
+        document.getElementById("formLogin").style.display='block';
+    }
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1];
+            }
+        }
+        return false;
+    }
+    function PageToLogin(){
+        window.location.href="Test.html?p=Login";
+    }
+    function PageToRegist(){
+        window.location.href="Test.html?p=Regist";
+    }
+</script>
+</body>
+</html>
