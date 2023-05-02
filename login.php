@@ -1,6 +1,16 @@
 <?php
-// 连接MySQL数据库
-$conn = mysqli_connect('localhost:3306', 'GuardianSystem', 'CzrH5CcfmryAGxtP', 'guardiansystem');
+
+$config = include 'config.php';
+
+//初始化数据库信息
+$mysqlHost = $config['mysqlHost'];
+$mysqlUsername = $config['mysqlUsername'];
+$mysqlPassword = $config['mysqlPassword'];
+$mysqlDbname = $config['mysqlDbname'];
+
+// 创建与 MySQL 数据库的连接
+$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
+
  // Check if connection is successful
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
@@ -22,7 +32,7 @@ if (!$conn) {
         if ($password == $mima) {
             echo '<script> alert("验证成功，已登录!"); </script>';
         }else{
-            echo '<script> alert("登录失败，密码错误!"); </script>';
+            echo '<script> alert("登录失败，请重试!"); </script>';
         }
     }
 }

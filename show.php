@@ -1,10 +1,16 @@
 <?php
-$servername = "localhost";
-$username = "guardiansystem";
-$password = "zxq123456";
-$dbname = "GuardianSystem";
+
+$config = include 'config.php';
+
+//初始化数据库信息
+$mysqlHost = $config['mysqlHost'];
+$mysqlUsername = $config['mysqlUsername'];
+$mysqlPassword = $config['mysqlPassword'];
+$mysqlDbname = $config['mysqlDbname'];
+
 // 创建与 MySQL 数据库的连接
-$conn = new mysqli($servername, $username, $password, $dbname,3306);
+$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
+
 // 检查连接是否成功
 if ($conn->connect_error) {
     die("连接失败：" . $conn->connect_error);

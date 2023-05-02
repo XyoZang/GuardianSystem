@@ -1,6 +1,16 @@
 <?php
-// 连接MySQL数据库
-$conn = mysqli_connect('localhost:3306', 'GuardianSystem', 'CzrH5CcfmryAGxtP', 'guardiansystem');
+
+$config = include 'config.php';
+
+//初始化数据库信息
+$mysqlHost = $config['mysqlHost'];
+$mysqlUsername = $config['mysqlUsername'];
+$mysqlPassword = $config['mysqlPassword'];
+$mysqlDbname = $config['mysqlDbname'];
+
+// 创建与 MySQL 数据库的连接
+$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
+
  // Check if connection is successful
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
@@ -27,6 +37,7 @@ if (!$conn) {
         $IDfst[] = $row["家属身份证号"];
         $IDsec[] = $row["被监测人身份证号"];
     }
+   
     // 判断用户输入的信息是否已经被录入
     if (in_array($_POST["jiashuID"], $IDfst) && in_array($_POST["laorenID"], $IDsec)) {
         echo '<script> alert("该账号已被创建!"); </script>';
@@ -37,9 +48,9 @@ if (!$conn) {
         $sql2 = "INSERT INTO `亲属关系` (`被监测人身份证号`,`家属身份证号`,`血缘关系`,`登录密码`) VALUES ('$laorenID','$jiashuID','$xueyuanguanxi','$password')";
         $sql3 = "INSERT INTO `被监测人` (`姓名`,`身份证号`,`性别`,`年龄`,`联系电话`) VALUES ('$laorenname','$laorenID','$laorenxingbie','$laorenage','$laorendianhua')";
         // 执行查询
-        mysqli_query($conn, $sql1);
-        mysqli_query($conn, $sql3);
-        mysqli_query($conn, $sql2);
+        $conn->query($sql1);
+        $conn->query($sql3);
+        $conn->query($sql2);
         // Display success message
         echo '<script> alert("注册成功!"); </script>';
     }
