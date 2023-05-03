@@ -1,7 +1,6 @@
 <?php
 
 $config = include 'config.php';
-
 //初始化数据库信息
 $mysqlHost = $config['mysqlHost'];
 $mysqlUsername = $config['mysqlUsername'];
