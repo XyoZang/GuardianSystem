@@ -27,17 +27,17 @@ if (!$conn) {
     echo "404 DataNotFound!";
 } else{
     // Insert data into database
-    $jiashuname = $_POST['jiashuname'];
-    $jiashuID = $_POST['jiashuID'];
-    $jiashuxingbie = $_POST['jiashuxingbie'];
-    $jiashudianhua = $_POST['jiashudianhua'];
-    $xueyuanguanxi = $_POST['xueyuanguanxi'];
-    $password = $_POST['password'];
-    $laorenname = $_POST['laorenname'];
-    $laorenxingbie = $_POST['laorenxingbie'];
-    $laorenage = $_POST['laorenage'];
-    $laorenID = $_POST['laorenID'];
-    $laorendianhua = $_POST['laorendianhua'];
+    $userName = $_POST['userName'];
+    $userID = $_POST['userID'];
+    $userGender = $_POST['userGender'];
+    $userPhone = $_POST['userPhone'];
+    $userRelaShip = $_POST['userRelaShip'];
+    $userPswd = $_POST['userPswd'];
+    $patientName = $_POST['patientName'];
+    $patientGender = $_POST['patientGender'];
+    $patientAge = $_POST['patientAge'];
+    $patientID = $_POST['patientID'];
+    $patientPhone = $_POST['patientPhone'];
     // 执行 SQL 查询语句，获取所有已录入的家属和被监护者的身份证号
     $result = $conn->query("SELECT `被监测人身份证号`, `家属身份证号` FROM `亲属关系`");
     // 存储所有已录入的家属和被监护者的身份证号
@@ -49,7 +49,7 @@ if (!$conn) {
     }
    
     // 判断用户输入的信息是否已经被录入
-    if (in_array($_POST["jiashuID"], $IDfst) && in_array($_POST["laorenID"], $IDsec)) {
+    if (in_array($_POST["userID"], $IDfst) && in_array($_POST["patientID"], $IDsec)) {
     ?>
     <script>
         Swal.fire({
@@ -69,9 +69,9 @@ if (!$conn) {
     } 
     else {
         // 如果没有被录入，则将该信息插入到数据库中
-        $sql1 = "INSERT INTO `家属` (`姓名`,`身份证号`,`性别`,`电话号码`) VALUES ('$jiashuname','$jiashuID','$jiashuxingbie','$jiashudianhua')";
-        $sql2 = "INSERT INTO `亲属关系` (`被监测人身份证号`,`家属身份证号`,`血缘关系`,`登录密码`) VALUES ('$laorenID','$jiashuID','$xueyuanguanxi','$password')";
-        $sql3 = "INSERT INTO `被监测人` (`姓名`,`身份证号`,`性别`,`年龄`,`联系电话`) VALUES ('$laorenname','$laorenID','$laorenxingbie','$laorenage','$laorendianhua')";
+        $sql1 = "INSERT INTO `家属` (`姓名`,`身份证号`,`性别`,`电话号码`) VALUES ('$userName','$userID','$userGender','$userPhone')";
+        $sql2 = "INSERT INTO `亲属关系` (`被监测人身份证号`,`家属身份证号`,`血缘关系`,`登录密码`) VALUES ('$patientID','$userID','$userRelaShip','$userPswd')";
+        $sql3 = "INSERT INTO `被监测人` (`姓名`,`身份证号`,`性别`,`年龄`,`联系电话`) VALUES ('$patientName','$patientID','$patientGender','$patientAge','$patientPhone')";
         // 执行查询
         $conn->query($sql1);
         $conn->query($sql3);

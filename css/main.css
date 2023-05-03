@@ -72,7 +72,3 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #ef3d47;
 }
-.hrefButton {
-    position: relative;
-    left: 65%;
-}

@@ -28,10 +28,10 @@ if (!$conn) {
 } else{
     //下面实现已有账号的登录功能
     //输入家属身份证号和密码以验证身份
-    $jiashuID = $_POST['jiashuID'];
-    $password = $_POST['password'];
+    $loginID = $_POST['loginID'];
+    $password = $_POST['loginPswd'];
     // 执行 SQL 查询语句，查询与用户输入的身份证号和密码所匹配的数据
-    $result = $conn->query("SELECT `登录密码` FROM `亲属关系` WHERE `家属身份证号`='$jiashuID'");
+    $result = $conn->query("SELECT `登录密码` FROM `亲属关系` WHERE `家属身份证号`='$loginID'");
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){
     ?>

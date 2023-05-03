@@ -51,6 +51,27 @@
                     }
                 });
             }
+
+            // 模拟数据
+            var data = [];
+            for (var i = 0; i < 100; i++) {
+                data.push(Math.random() * 10 - 5);
+            }
+            // 模拟数据更新
+            setInterval(function () {
+                for (var i = 0; i < 10; i++) {
+                    data.shift();
+                    data.push(Math.random() * 10 - 5);
+                }
+                eegChart.setOption({
+                    series: [
+                        {
+                            data: data
+                        }
+                    ]
+                });
+            }, 300);
+
             // 绘制脑电图表
             var eegChart = echarts.init(document.getElementById('eeg-chart'), null, {
                 width: 600,
@@ -87,23 +108,41 @@
                 title: {
                     text: '脑电'
                 },
-                tooltip: {},
-                legend: {
-                    data:[]
+                tooltip: {
+                    show: false,
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line'
+                    }
                 },
                 xAxis: {
-                    show:false,
+                    type: 'category',
+                    boundaryGap: false,
                     data: []
                 },
                 yAxis: {
-                    show:false,
-                    scale:true,
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false
+                    }
                 },
-                series: [{
-                    name: '脑电',
-                    type: 'line',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
+                series: [
+                    {
+                        type: 'line',
+                        showSymbol: false,
+                        hoverAnimation: false,
+                        data: data
+                    }
+                ]
             };
 
             // 脉搏图配置
@@ -205,8 +244,8 @@
             bpChart.setOption(bpOption);
             spo2Chart.setOption(spo2Option);
 
-            // 每两秒调用updateData进行数据更新
-            setInterval(updateData, 2000);
+            // // 每两秒调用updateData进行数据更新
+            // setInterval(updateData, 2000);
         });
     </script>
 </body>
