@@ -1,3 +1,13 @@
+<!doctype html>
+
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>注册中···</title>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
 <?php
 
 $config = include 'config.php';
@@ -24,16 +34,73 @@ if (!$conn) {
     $result = $conn->query("SELECT `登录密码` FROM `亲属关系` WHERE `家属身份证号`='$jiashuID'");
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){
-        echo '<script> alert("身份证号错误或该账号不存在！"); </script>';
+    ?>
+    <script>
+        Swal.fire({
+            title: '登录失败！',
+            text: "该账号不存在！",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '点击重试'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href="Test.html?p=Login";
+            }
+        })
+    </script>
+    <?php
     } else{
         $row = $result->fetch_assoc();
         $mima = $row["登录密码"];
         //验证数据库中录入的信息
         if ($password == $mima) {
-            echo '<script> alert("验证成功，已登录!"); </script>';
+            ?>
+            <script>
+                let timerInterval
+                Swal.fire({
+                    title: '登录成功!',
+                    html: '即将跳转至用户界面： <b></b> milliseconds.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer');
+                    }
+                    window.location.href="show.html";
+                })
+            </script>
+            <?php
         }else{
-            echo '<script> alert("登录失败，请重试!"); </script>';
+            ?>
+            <script>
+                Swal.fire({
+                    title: '登录失败！',
+                    text: "用户名或密码错误！",
+                    icon: 'warning',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '点击重试'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href="Test.html?p=Login";
+                    }
+                })
+            </script>
+            <?php
         }
     }
 }
 ?>
+</body>

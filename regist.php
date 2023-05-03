@@ -1,3 +1,13 @@
+<!doctype html>
+
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆中···</title>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@10'></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
 <?php
 
 $config = include 'config.php';
@@ -40,7 +50,22 @@ if (!$conn) {
    
     // 判断用户输入的信息是否已经被录入
     if (in_array($_POST["jiashuID"], $IDfst) && in_array($_POST["laorenID"], $IDsec)) {
-        echo '<script> alert("该账号已被创建!"); </script>';
+    ?>
+    <script>
+        Swal.fire({
+            title: '注册失败！',
+            text: "该账号已被创建！",
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '点击重试'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href="Test.html?p=Regist";
+            }
+        })
+    </script>
+    <?php
     } 
     else {
         // 如果没有被录入，则将该信息插入到数据库中
@@ -52,7 +77,33 @@ if (!$conn) {
         $conn->query($sql3);
         $conn->query($sql2);
         // Display success message
-        echo '<script> alert("注册成功!"); </script>';
+    ?>
+    <script>
+        let timerInterval
+        Swal.fire({
+            title: '注册成功!',
+            html: '即将跳转至登录界面： <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer');
+            }
+            window.location.href="Test.html?p=Login";
+        })
+    </script>
+    <?php
     }
 
  // Close database connection
@@ -60,3 +111,5 @@ if (!$conn) {
 
 mysqli_close($conn);
 ?>
+</body>
+
