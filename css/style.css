@@ -119,23 +119,6 @@ p {
     line-height: 24px;
 }
 
-a {
-    color: #222222;
-    text-decoration: none;
-    outline: none !important;
-}
-
-a,
-.btn {
-    text-decoration: none !important;
-    outline: none !important;
-    -webkit-transition: all .3s ease-in-out;
-    -moz-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
-    -o-transition: all .3s ease-in-out;
-    transition: all .3s ease-in-out;
-}
-
 img {
     max-width: 100%;
     height: auto;
@@ -164,12 +147,6 @@ img {
     margin: 0;
     padding: 0;
 }
-
-.form-control:focus {
-    border-color: #ffffff !important;
-    box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25);
-}
-
 
 .badge {
     font-weight: 500;
