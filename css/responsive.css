@@ -128,9 +128,7 @@
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
-    .navbar {
-        padding: .5rem 30px;
-    }
+
     .header_section {
         background-size: cover;
     }
@@ -186,21 +184,7 @@
     .logo {
         width: 50%;
     }
-    .navbar-expand-lg .navbar-nav .nav-link {
-        display: block;
-        color: #272a2a;
-        text-align: center;
-    }
-    .navbar-light .navbar-nav .nav-link:focus,
-    .navbar-light .navbar-nav .nav-link:hover {
-        color: #15e4d0;
-    }
-    .nav-link {
-        display: none;
-    }
-    .navbar {
-        padding: .5rem 15px;
-    }
+
     .banner_taital {
         font-size: 50px;
         padding-top: 50px;
@@ -331,21 +315,7 @@
     .costum_menu {
         display: none;
     }
-    .navbar-expand-lg .navbar-nav .nav-link {
-        display: block;
-        color: #272a2a;
-        text-align: center;
-    }
-    .navbar-light .navbar-nav .nav-link:focus,
-    .navbar-light .navbar-nav .nav-link:hover {
-        color: #15e4d0;
-    }
-    .nav-link {
-        display: none;
-    }
-    .navbar {
-        padding: .5rem 15px;
-    }
+
     .banner_taital {
         font-size: 50px;
         padding-top: 50px;
@@ -476,21 +446,7 @@
     .costum_menu {
         display: none;
     }
-    .navbar-expand-lg .navbar-nav .nav-link {
-        display: block;
-        color: #272a2a;
-        text-align: center;
-    }
-    .navbar-light .navbar-nav .nav-link:focus,
-    .navbar-light .navbar-nav .nav-link:hover {
-        color: #15e4d0;
-    }
-    .nav-link {
-        display: none;
-    }
-    .navbar {
-        padding: .5rem 15px;
-    }
+
     .banner_taital {
         font-size: 50px;
         padding-top: 50px;

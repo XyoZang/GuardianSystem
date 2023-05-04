@@ -10,21 +10,6 @@
  2) font-family: 'Poppins', sans-serif;
  ----------------------------------------*****/
 
-
-/*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
-
-@import url(animate.min.css);
-@import url(normalize.css);
-@import url(icomoon.css);
-@import url(css/font-awesome.min.css);
-@import url(meanmenu.css);
-@import url(owl.carousel.min.css);
-@import url(swiper.min.css);
-@import url(slick.css);
-@import url(jquery.fancybox.min.css);
-@import url(jquery-ui.css);
-@import url(nice-select.css);
-
 /*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
 
 * {
@@ -185,9 +170,6 @@ img {
     box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .25);
 }
 
-.navbar-form input {
-    border: none !important;
-}
 
 .badge {
     font-weight: 500;
@@ -232,23 +214,6 @@ button {
 
 .bg-light {
     background-color: transparent !important;
-}
-
-.navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 20px;
-    padding-left: 20px;
-    color: #272a2a;
-    font-size: 18px;
-}
-.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-    color: #15e4d0;
-}
-
-.navbar {
-    padding: .5rem 70px;
-}
-.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
-    color: #15e4d0;
 }
 
 .banner_section {
