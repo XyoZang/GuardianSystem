@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- Responsive-->
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .sideBar {
+            position: fixed;
+            background-color: #f8f9fa;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            overflow-y: auto;
+            width: 300px;
+        }
+        .mainBox {
+            margin-left: 300px;
+        }
+    </style>
 </head>
 <body>
 
@@ -94,95 +108,92 @@
         </symbol>
     </svg>
 
-    <!-- NavBar -->
     <div class="container-fluid">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <object data="src/icon.svg" class="bi me-2" width="40" height="32" role="img"></object>
-            </a>
-    
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-dark">首页</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">控制台</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
-            </ul>
-    
-            <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#registModal">注册</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登录</button>
+        <div class="row">
+            <div class="col-md-3 sideBar">
+                <!-- SideBar -->
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                        <object data="src/icon.svg" class="bi me-2" width="40" height="32" role="img"></object>
+                        <span class="fs-4">Console</span>
+                    </a>
+                    <hr>
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#home" />
+                                </svg>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#speedometer2" />
+                                </svg>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#table" />
+                                </svg>
+                                Orders
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#grid" />
+                                </svg>
+                                Products
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#people-circle" />
+                                </svg>
+                                Customers
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>mdo</strong>
+                        </a>
+                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </header>
-    </div>
-
-    <!-- SideBar -->
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-            </svg>
-            <span class="fs-4">Sidebar</span>
-        </a>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#home" />
-                    </svg>
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-dark">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#speedometer2" />
-                    </svg>
-                    Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-dark">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#table" />
-                    </svg>
-                    Orders
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-dark">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#grid" />
-                    </svg>
-                    Products
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link link-dark">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#people-circle" />
-                    </svg>
-                    Customers
-                </a>
-            </li>
-        </ul>
-        <hr>
-        <div class="dropdown">
-            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
-            </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
+            <div class="col-md-9 mainBox">
+                <div class="container-fluid">
+                    <!-- NavBar -->
+                    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+                        <ul class="nav col-12 col-md-auto mb-2 mb-md-0">
+                            <li><a href="#" class="nav-link px-2 link-dark">首页</a></li>
+                            <li><a href="#" class="nav-link px-2 link-dark">控制台</a></li>
+                            <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
+                        </ul>
+                    </header>
+                </div>
+            
+            </div>
         </div>
     </div>
+    
 
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="js/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>

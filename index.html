@@ -63,54 +63,26 @@
     
             <!-- 模态框内容 -->
             <div class="modal-body">
-                <form method="post" id="formRegist" action="regist.php">
+                <form id="formRegist" onsubmit="return false;">
                     <h3>用户信息</h3>
                     <div class="mb-3 mt-3">
                         <label for="userName" class="form-label">用户名:</label>
-                        <input type="text" class="form-control" id="userName" placeholder="Enter User Name" name="userName" required>
+                        <input type="text" class="form-control" id="userName" placeholder="请输入用户名" name="userName" required>
                     </div>
                     <div class="mb-3">
-                        <label for="userPswd" class="form-label">密码:</label>
-                        <input type="password" class="form-control" id="userPswd" placeholder="Enter password" name="userPswd" required>
+                        <label for="userPswd" class="form-label">密&nbsp;&nbsp;&nbsp;码:</label>
+                        <input type="password" class="form-control" id="userPswd" placeholder="请输入密码" name="userPswd" onblur="pswdCheck()" required>
+                        <span id="pswdCheckSpan"  style="color: red"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="userPhone" class="form-label">电话:</label>
-                        <input type="text" class="form-control" id="userPhone" name="userPhone" required>
-                    </div>
-                    <label for="userGender" class="form-label">性别：</label>
-                    <select class="form-select" id="userGender" name="userGender" required>
-                        <option>男</option>
-                        <option>女</option>
-                    </select>
-                    <div class="mb-3">
-                        <label for="userID" class="form-label">身份证号:</label>
-                        <input type="text" class="form-control" id="userID" name="userID" required>
+                        <label  for="userPswdConf" class="form-label">确认密码：</label>
+                            <input type="password" class="form-control"  id="userPswdConf" placeholder="请再次输入密码" onblur="pswdConf()" required="required">
+                            <span id="pswdConfSpan"  style="color: red"></span>
                     </div>
                     <div class="mb-3">
-                        <label for="userRelaShip" class="form-label">血缘关系:</label>
-                        <input type="text" class="form-control" id="userRelaShip" name="userRelaShip" required>
-                    </div>
-                    <h3>被监护人信息</h3>
-                    <div class="mb-3 mt-3">
-                        <label for="patientName" class="form-label">姓名:</label>
-                        <input type="text" class="form-control" id="patientName" placeholder="Enter Patient Name" name="patientName" required>
-                    </div>
-                    <label for="patientGender" class="form-label">性别：</label>
-                    <select class="form-select" id="patientGender" name="patientGender" required>
-                        <option>男</option>
-                        <option>女</option>
-                    </select>
-                    <div class="mb-3">
-                        <label for="patientAge" class="form-label">年龄:</label>
-                        <input type="text" class="form-control" id="patientAge" placeholder="Enter Patient Age" name="patientAge" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="patientPhone" class="form-label">电话:</label>
-                        <input type="text" class="form-control" id="patientPhone" name="patientPhone" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="patientID" class="form-label">身份证号:</label>
-                        <input type="text" class="form-control" id="patientID" name="patientID" required>
+                        <label for="userEmail" class="form-label">邮&nbsp;&nbsp;&nbsp;箱:</label>
+                        <input type="text" class="form-control" id="userEmail" placeholder="请输入电子邮箱" name="userEmail" onblur="emailCheck()" required>
+                        <span id="emailCheckSpan"  style="color: red"></span>
                     </div>
                 </form>
             </div>
@@ -118,7 +90,7 @@
             <!-- 模态框底部 -->
             <div class="modal-footer">
                 <!-- <a href="Test.html?p=Login" class="hrefButton">已有帐号，点此去登录</a> -->
-                <button type="submit" class="btn btn-primary" onclick="submitRegist()">注册</button>
+                <button type="button" class="btn btn-primary" id="registBtn">注册</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
             </div>
     
@@ -139,7 +111,7 @@
     
             <!-- 模态框内容 -->
             <div class="modal-body">
-                <form method="post" action="login.php" id="formLogin">
+                <form id="formLogin" onsubmit="return false;">
                     <div class="mb-3">
                         <label for="loginName" class="form-label">用户名:</label>
                         <input type="text" class="form-control" id="loginName" name="loginName" placeholder="Enter User Name" required>
@@ -167,15 +139,65 @@
     </div>
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="js/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
-    <!-- 最新的 Bootstrap5 核心 JavaScript 文件
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script> -->
     <script>
-        function submitRegist(){
-            document.getElementById("formRegist").submit();
+        //密码复杂度校验
+        function pswdCheck(){
+            var text= $("#userPswd").val();
+            var re =/^(?=.*[a-z])(?=.*\d)[^]{8,16}$/;
+            var result =  re.test(text);
+            if(!result) {
+                $("#pswdCheckSpan").html("密码必须包含数字,字母,且不少于8位");
+                return false;
+            }else {
+                $("#pswdCheckSpan").html("");
+                return true;
+            }
         }
-        function submitLogin(){
-            document.getElementById("formLogin").submit();
+        //确认密码
+        function pswdConf(){
+            var text1= $("#userPswd").val();
+            var text2= $("#userPswdConf").val();
+            if (text2 == text1){
+                $("#pswdConfSpan").html("");
+                return true;
+            }else {
+                $("#pswdConfSpan").html("两次输入的密码不一致!");
+                return false;
+            }
         }
+        //校验邮箱
+        function emailCheck(){
+            var text= $("#userEmail").val();
+            var re =/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            var result =  re.test(text);
+            if(!result || !text) {
+                $("#emailCheckSpan").html("邮箱格式不正确！");
+                return false;
+            }else {
+                $("#emailCheckSpan").html("");
+                return true;
+            }
+        }
+        //表单提交
+        $('#registBtn').click(function() {
+            if (pswdCheck() && pswdConf() && emailCheck()){
+                $.ajax({
+                    url: 'regist.php',
+                    method: 'POST',
+                    data: $('#formRegist').serialize(),
+                    dataType: 'json',
+                    success: function(data) {
+                        // 处理服务器返回的数据
+                        console.log(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('连接失败');
+                    }
+                });
+            } else{
+                console.log("请检查输入信息是否正确！");
+            }
+        });
     </script>
 </body>
 </html>
