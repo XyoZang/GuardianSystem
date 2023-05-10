@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css?family=Rajdhani:300,400,500,600,700');
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+* {
+    box-sizing: border-box !important;
+    transition: ease all 0.5s;
+}
+
+.index_title {
+    width: 100%;
+    float: left;
+    font-size: 60px;
+    color: #15e4d0;
+    font-weight: bold;
+    line-height: 60px;
+    padding-top: 120px;
+}
+
+.index_text {
+    width: 100%;
+    float: left;
+    font-size: 16px;
+    margin: 0px;
+    color: #252525;
+    text-align: justify;
+    font-weight: 300;
+    line-height: 24px;
+}
+
+.bg_section {
+    width: 100%;
+    float: left;
+    background-image: url(../src/banner-bg.png);
+    height: auto;
+    background-size: 100%;
+    padding: 10px 0px 25px 0px;
+    background-repeat: no-repeat;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.bg_img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .bg_section {
+        background-size: cover;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .bg_section {
+        background-size: cover;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .bg_section {
+        background-size: cover;
+    }
+}
+
+@media (max-width: 575px) {
+    .bg_section {
+        background-size: cover;
+    }
+}

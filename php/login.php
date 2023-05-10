@@ -45,7 +45,7 @@ if (!$conn) {
             $ro = $re->fetch_assoc();
             $uid = $ro["uid"];
             $token = encrypt($uid);
-            setcookie("token", $token);
+            setcookie("token", $token, time()+1800, '/');
         }else{
             $status = "Failed";
             $info = "密码错误！";

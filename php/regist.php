@@ -42,7 +42,7 @@ if (!$conn) {
     $Emaillist = array();
     while ($row = $result1->fetch_assoc()) {
         $IDlist[] = $row["user_name"];
-        $Emaillist = $row["email"];
+        $Emaillist[] = $row["email"];
     }
    
     // 判断用户输入的信息是否已经被录入

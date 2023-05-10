@@ -3,10 +3,8 @@ main();
 function main(){
     if ($.cookie('token')){
         console.log("已登录");
-        var login=true;
         $(".loginFalse").hide();
     } else{
-        var login=false;
         $(".loginTrue").hide();
     }
 }
@@ -52,7 +50,7 @@ function emailCheck(){
 $('#registBtn').click(function() {
     if (pswdCheck() && pswdConf() && emailCheck()){
         $.ajax({
-            url: 'regist.php',
+            url: 'php/regist.php',
             method: 'POST',
             data: $('#formRegist').serialize(),
             dataType: 'json',
@@ -72,7 +70,7 @@ $('#registBtn').click(function() {
 $('#loginBtn').click(function() {
     if ($("#loginAccount").val()){
         $.ajax({
-            url: 'login.php',
+            url: 'php/login.php',
             method: 'POST',
             data: $('#formLogin').serialize(),
             dataType: 'json',
@@ -92,7 +90,7 @@ $('#loginBtn').click(function() {
     }
 });
 function logOut(){
-    if ($.removeCookie('token')){
+    if ($.removeCookie('token', {path: '/'})){
         location.reload();
     }
 }
