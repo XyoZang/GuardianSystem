@@ -18,10 +18,15 @@ if (!$conn) {
     $info = "服务器连接失败！";
 } else{
     //下面实现已有账号的登录功能
-    $loginName = $_POST['loginName'];
+    $loginAccount = $_POST['loginAccount'];
     $password = $_POST['loginPswd'];
-    // 执行 SQL 查询语句，查询与用户输入的身份证号和密码所匹配的数据
-    $result = $conn->query("SELECT password FROM user_account WHERE user_name='$loginName'");
+    //判断登录方式为邮箱或用户名，并查询对应的密码
+    $pattern = "/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/";
+    if (preg_match($pattern, $loginAccount)){
+        $result = $conn->query("SELECT password FROM user_account WHERE email='$loginAccount'");
+    } else{
+        $result = $conn->query("SELECT password FROM user_account WHERE user_name='$loginAccount'");
+    }
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){
         $status = "Failed";

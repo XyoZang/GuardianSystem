@@ -113,11 +113,11 @@
             <div class="modal-body">
                 <form id="formLogin" onsubmit="return false;">
                     <div class="mb-3">
-                        <label for="loginName" class="form-label">用户名:</label>
-                        <input type="text" class="form-control" id="loginName" name="loginName" placeholder="Enter User Name" required>
+                        <label for="loginAccount" class="form-label">用户名或邮箱:</label>
+                        <input type="text" class="form-control" id="loginAccount" name="loginAccount" placeholder="Enter User Name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="loginPswd" class="form-label">密码:</label>
+                        <label for="loginPswd" class="form-label">密&nbsp;&nbsp;&nbsp;码:</label>
                         <input type="password" class="form-control" id="loginPswd" name="loginPswd" placeholder="Enter Password" required>
                     </div>
                 </form>
@@ -196,7 +196,7 @@
         });
         //登录表单提交
         $('#loginBtn').click(function() {
-            if ($("#loginName").val()){
+            if ($("#loginAccount").val()){
                 $.ajax({
                     url: 'login.php',
                     method: 'POST',
@@ -207,7 +207,7 @@
                         console.log(data);
                     },
                     error: function(xhr, status, error) {
-                        console.log('连接失败');
+                        console.log(error);
                     }
                 });
             } else{
