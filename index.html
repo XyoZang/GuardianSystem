@@ -117,10 +117,6 @@
                         <input type="text" class="form-control" id="loginName" name="loginName" placeholder="Enter User Name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="loginID" class="form-label">身份证号:</label>
-                        <input type="text" class="form-control" id="loginID" name="loginID" placeholder="Enter User ID" required>
-                    </div>
-                    <div class="mb-3">
                         <label for="loginPswd" class="form-label">密码:</label>
                         <input type="password" class="form-control" id="loginPswd" name="loginPswd" placeholder="Enter Password" required>
                     </div>
@@ -130,7 +126,7 @@
             <!-- 模态框底部 -->
             <div class="modal-footer">
             <!-- <a href="Test.html?p=Regist" class="hrefButton">还没有账号？点此去注册</a> -->
-            <button type="submit" class="btn btn-primary" onclick="submitLogin()">登录</button>
+            <button type="submit" class="btn btn-primary" id="loginBtn">登录</button>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
             </div>
     
@@ -178,7 +174,7 @@
                 return true;
             }
         }
-        //表单提交
+        //注册表单提交
         $('#registBtn').click(function() {
             if (pswdCheck() && pswdConf() && emailCheck()){
                 $.ajax({
@@ -196,6 +192,26 @@
                 });
             } else{
                 console.log("请检查输入信息是否正确！");
+            }
+        });
+        //登录表单提交
+        $('#loginBtn').click(function() {
+            if ($("#loginName").val()){
+                $.ajax({
+                    url: 'login.php',
+                    method: 'POST',
+                    data: $('#formLogin').serialize(),
+                    dataType: 'json',
+                    success: function(data) {
+                        // 处理服务器返回的数据
+                        console.log(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('连接失败');
+                    }
+                });
+            } else{
+                console.log("请输入用户名")
             }
         });
     </script>
