@@ -1,5 +1,6 @@
 <?php
 
+include 'encrypt.php';
 $config = include 'config.php';
 
 //初始化数据库信息
@@ -23,10 +24,11 @@ if (!$conn) {
     //判断登录方式为邮箱或用户名，并查询对应的密码
     $pattern = "/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/";
     if (preg_match($pattern, $loginAccount)){
-        $result = $conn->query("SELECT password FROM user_account WHERE email='$loginAccount'");
+        $Account = "email";
     } else{
-        $result = $conn->query("SELECT password FROM user_account WHERE user_name='$loginAccount'");
+        $Account = "user_name";
     }
+    $result = $conn->query("SELECT password FROM user_account WHERE $Account='$loginAccount'");
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){
         $status = "Failed";
@@ -38,6 +40,12 @@ if (!$conn) {
         if ($password == $mima) {
             $status = "Success";
             $info = "登录成功！";
+            //获取用户ID并加密生成token,生成cookie用于保持登陆状态
+            $re = $conn->query("SELECT uid FROM user_account WHERE $Account='$loginAccount'");
+            $ro = $re->fetch_assoc();
+            $uid = $ro["uid"];
+            $token = encrypt($uid);
+            setcookie("token", $token);
         }else{
             $status = "Failed";
             $info = "密码错误！";

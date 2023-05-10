@@ -15,20 +15,40 @@
 
     <!-- NavBar -->
     <div class="container">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-            <a class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <object data="src/icon.svg" class="bi me-2" width="40" height="32" role="img"></object>
-            </a>
-    
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-dark">首页</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">控制台</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
-            </ul>
-    
-            <div class="col-md-3 text-end">
-                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#registModal">注册</button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登录</button>
+        <header class="p-3 mb-3 border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                        <object data="src/icon.svg" class="bi me-2" width="40" height="32" role="img"></object>
+                    </a>
+        
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="#" class="nav-link px-2 link-dark">首页</a></li>
+                        <li><a href="#" class="nav-link px-2 link-dark">控制台</a></li>
+                        <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
+                    </ul>
+                    <!-- 未登陆时的注册与登录按钮 -->
+                    <div class="col-md-3 text-end loginFalse">
+                        <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#registModal">注册</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登录</button>
+                    </div>
+                    <!-- 登录后变为头像与下拉菜单 -->
+                    <div class="dropdown text-end loginTrue">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="src/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">控制台</a></li>
+                            <li><a class="dropdown-item" href="#">设置</a></li>
+                            <li><a class="dropdown-item" href="#">资料</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="javascript:void(0);" onclick="logOut()">退出登录</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </header>
     </div>
@@ -134,86 +154,8 @@
         </div>
     </div>
     <script src="js/jquery-3.6.4.min.js"></script>
+    <script src="js/jquery.cookie-1.4.1.js"></script>
     <script src="js/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
-    <script>
-        //密码复杂度校验
-        function pswdCheck(){
-            var text= $("#userPswd").val();
-            var re =/^(?=.*[a-z])(?=.*\d)[^]{8,16}$/;
-            var result =  re.test(text);
-            if(!result) {
-                $("#pswdCheckSpan").html("密码必须包含数字,字母,且不少于8位");
-                return false;
-            }else {
-                $("#pswdCheckSpan").html("");
-                return true;
-            }
-        }
-        //确认密码
-        function pswdConf(){
-            var text1= $("#userPswd").val();
-            var text2= $("#userPswdConf").val();
-            if (text2 == text1){
-                $("#pswdConfSpan").html("");
-                return true;
-            }else {
-                $("#pswdConfSpan").html("两次输入的密码不一致!");
-                return false;
-            }
-        }
-        //校验邮箱
-        function emailCheck(){
-            var text= $("#userEmail").val();
-            var re =/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-            var result =  re.test(text);
-            if(!result || !text) {
-                $("#emailCheckSpan").html("邮箱格式不正确！");
-                return false;
-            }else {
-                $("#emailCheckSpan").html("");
-                return true;
-            }
-        }
-        //注册表单提交
-        $('#registBtn').click(function() {
-            if (pswdCheck() && pswdConf() && emailCheck()){
-                $.ajax({
-                    url: 'regist.php',
-                    method: 'POST',
-                    data: $('#formRegist').serialize(),
-                    dataType: 'json',
-                    success: function(data) {
-                        // 处理服务器返回的数据
-                        console.log(data);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('连接失败');
-                    }
-                });
-            } else{
-                console.log("请检查输入信息是否正确！");
-            }
-        });
-        //登录表单提交
-        $('#loginBtn').click(function() {
-            if ($("#loginAccount").val()){
-                $.ajax({
-                    url: 'login.php',
-                    method: 'POST',
-                    data: $('#formLogin').serialize(),
-                    dataType: 'json',
-                    success: function(data) {
-                        // 处理服务器返回的数据
-                        console.log(data);
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    }
-                });
-            } else{
-                console.log("请输入用户名")
-            }
-        });
-    </script>
+    <script src="js/index.js"></script>
 </body>
 </html>
