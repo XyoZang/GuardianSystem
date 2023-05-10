@@ -1,13 +1,3 @@
-main();
-//主函数
-function main(){
-    if ($.cookie('token')){
-        console.log("已登录");
-        $(".loginFalse").hide();
-    } else{
-        $(".loginTrue").hide();
-    }
-}
 //密码复杂度校验
 function pswdCheck(){
     var text= $("#userPswd").val();
@@ -89,8 +79,3 @@ $('#loginBtn').click(function() {
         console.log("请输入用户名")
     }
 });
-function logOut(){
-    if ($.removeCookie('token', {path: '/'})){
-        location.reload();
-    }
-}
