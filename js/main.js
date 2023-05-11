@@ -10,6 +10,6 @@ function main(){
 }
 function logOut(){
     if ($.removeCookie('token', {path: '/'})){
-        location.reload();
+        window.location.href = '/';
     }
 }

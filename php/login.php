@@ -44,8 +44,8 @@ if (!$conn) {
             $re = $conn->query("SELECT uid FROM user_account WHERE $Account='$loginAccount'");
             $ro = $re->fetch_assoc();
             $uid = $ro["uid"];
-            $token = encrypt($uid);
-            setcookie("token", $token, time()+1800, '/');
+            // $token = encrypt($uid);
+            setcookie("token", $uid, time()+1800, '/');
         }else{
             $status = "Failed";
             $info = "密码错误！";
