@@ -27,12 +27,12 @@
                         <li><a href="#" class="nav-link px-2 link-dark">关于</a></li>
                     </ul>
                     <!-- 未登陆时的注册与登录按钮 -->
-                    <div class="col-md-3 text-end loginFalse">
+                    <div class="col-md-3 text-end loginFalse" style="display: none;">
                         <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#registModal">注册</button>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">登录</button>
                     </div>
                     <!-- 登录后变为头像与下拉菜单 -->
-                    <div class="dropdown text-end loginTrue">
+                    <div class="dropdown text-end loginTrue" style="display: none;">
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="./src/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -154,6 +154,7 @@
     <script src="./js/jquery-3.6.4.min.js"></script>
     <script src="./js/jquery.cookie-1.4.1.js"></script>
     <script src="./js/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="./js/main.js"></script>
     <script src="./js/index.js"></script>
 </body>
