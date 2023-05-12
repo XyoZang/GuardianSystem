@@ -29,12 +29,6 @@ if (!$conn) {
     } else{
         $status = "Success";
         $info = "查询成功";
-        if ($reProfile->num_rows < 1){
-            $info = "查询成功，但用户资料为空";
-            $get_profile = false;
-        } else{
-            $get_profile = true;
-        }
         $rowA = $reAccount->fetch_assoc();
         $rowP = $reProfile->fetch_assoc();
     }
@@ -46,7 +40,6 @@ $response = array(
     'status' => $status,
     'userName' => $rowA["user_name"],
     'userEmail' => $rowA["email"],
-    'get_profile' => $get_profile,
     'name' => $rowP["name"],
     'gender' => $rowP["gender"],
     'phone_number' => $rowP["phone_number"],

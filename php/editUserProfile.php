@@ -18,7 +18,6 @@ if (!$conn) {
     $info = "服务器连接失败！";
 } else{
     //接收数据
-    $Profile_exist = $_POST['Profile_exist'];
     $name = $_POST['edit_name']?$_POST['edit_name']:NULL;
     $gender = $_POST['edit_gender']?$_POST['edit_gender']:NULL;
     $phone_number = $_POST['edit_phone_number']?$_POST['edit_phone_number']:NULL;
@@ -27,6 +26,12 @@ if (!$conn) {
     //根据token解码出uid用以查询
     $uid = $_COOKIE["token"];
     //根据用户资料是否存在来决定是插入新数据还是更新已有数据
+    $reProfile = $conn->query("SELECT name, gender, phone_number, id_number FROM user_profile WHERE uid='$uid'");
+    if ($reProfile->num_rows < 1){
+        $Profile_exist = false;
+    } else{
+        $Profile_exist = true;
+    }
     if ($Profile_exist) {
         $sql = "UPDATE user_profile SET name = ?, gender = ?, phone_number = ?, id_number = ?, update_time = ? WHERE uid = ?";
         $stmt = $conn->prepare($sql);

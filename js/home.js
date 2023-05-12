@@ -10,16 +10,10 @@ $(document).ready(function(){
             console.log(response);
             $("#userName").html(response['userName']);
             $("#userEmail").html(response['userEmail']);
-            if (response['get_profile']) {
-                profile_status = '&Profile_exist=1';
-                $("#name").html(response['name']);
-                $("#gender").html(response['gender']);
-                $("#phone_number").html(response['phone_number']);
-                $("#id_number").html(response['id_number']);
-            } else {
-                profile_status = '&Profile_exist=0';
-            }
-            
+            $("#name").html(response['name']);
+            $("#gender").html(response['gender']);
+            $("#phone_number").html(response['phone_number']);
+            $("#id_number").html(response['id_number']);
         },
         error: function(xhr, status, error) {
             console.log('Ajax连接失败');
@@ -40,7 +34,7 @@ $(document).ready(function(){
         $.ajax({
             url: '/php/editUserProfile.php',
             method: 'POST',
-            data: $('#formEditProfile').serialize().concat(profile_status),
+            data: $('#formEditProfile').serialize(),
             dataType: 'json',
             success: function(response) {
                 // 处理服务器返回的数据
