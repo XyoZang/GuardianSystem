@@ -20,25 +20,37 @@ if (!$conn) {
 } else{
     //根据token解码出uid用以查询
     $uid = $_COOKIE["token"];
-    $result = $conn->query("SELECT user_name, email FROM user_account WHERE uid='$uid'");
+    $reAccount = $conn->query("SELECT user_name, email FROM user_account WHERE uid='$uid'");
+    $reProfile = $conn->query("SELECT name, gender, phone_number, id_number FROM user_profile WHERE uid='$uid'");
     // 将查询结果赋值给变量
-    if ($result->num_rows < 1){
+    if ($reAccount->num_rows < 1){
         $status = "Failed";
         $info = "查询失败！";
     } else{
-        $row = $result->fetch_assoc();
         $status = "Success";
         $info = "查询成功";
-        $userName = $row["user_name"];
-        $userEmail = $row["email"];
+        if ($reProfile->num_rows < 1){
+            $info = "查询成功，但用户资料为空";
+            $get_profile = false;
+        } else{
+            $get_profile = true;
+        }
+        $rowA = $reAccount->fetch_assoc();
+        $rowP = $reProfile->fetch_assoc();
     }
+    
 }
 mysqli_close($conn);
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
-    'userName' => $userName,
-    'userEmail' => $userEmail,
+    'userName' => $rowA["user_name"],
+    'userEmail' => $rowA["email"],
+    'get_profile' => $get_profile,
+    'name' => $rowP["name"],
+    'gender' => $rowP["gender"],
+    'phone_number' => $rowP["phone_number"],
+    'id_number' => $rowP["id_number"],
     "info" => $info
 );
 echo json_encode($response);
