@@ -1,16 +1,9 @@
 <?php
 
-include 'encrypt.php';
-$config = include 'config.php';
-
-//初始化数据库信息
-$mysqlHost = $config['mysqlHost'];
-$mysqlUsername = $config['mysqlUsername'];
-$mysqlPassword = $config['mysqlPassword'];
-$mysqlDbname = $config['mysqlDbname'];
+include 'common.php';
 
 // 创建与 MySQL 数据库的连接
-$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
+$conn = linkDB();
 
  // Check if connection is successful
 if (!$conn) {
@@ -50,7 +43,7 @@ if (!$conn) {
         }
     }
 }
-mysqli_close($conn);
+$conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,

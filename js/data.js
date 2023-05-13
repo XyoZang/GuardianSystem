@@ -7,11 +7,12 @@ $(document).ready(function(){
         success: function(response) {
             // 处理服务器返回的数据
             console.log(response);
-            response['data'].forEach(function(element, index) {
-                console.log("索引 " + index + " 的元素是 " + element['name']);
-                var newHTML = '<tr>'+$("#patientList").html()+'<td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td>查看</td></tr>';
-                $("#patientList").html(newHTML);
-            });
+            if (response['data']){
+                response['data'].forEach(function(element, index) {
+                    var newHTML = '<tr>'+$("#patientList").html()+'<td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td>查看</td></tr>';
+                    $("#patientList").html(newHTML);
+                });
+            }
         },
         error: function(xhr, status, error) {
             console.log('Ajax连接失败');

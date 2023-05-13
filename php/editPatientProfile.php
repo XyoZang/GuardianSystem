@@ -1,30 +1,9 @@
 <?php
 
-$config = include 'config.php';
-
-//初始化数据库信息
-$mysqlHost = $config['mysqlHost'];
-$mysqlUsername = $config['mysqlUsername'];
-$mysqlPassword = $config['mysqlPassword'];
-$mysqlDbname = $config['mysqlDbname'];
+include 'common.php';
 
 // 创建与 MySQL 数据库的连接
-$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
-
-function generateUuid()
-{
-    if (function_exists('uuid_create')) {
-        $uuid = uuid_create(1); // 使用 UUID v1 版本生成
-    } else {
-        // 如果 uuid_create() 不存在，使用其他方式生成
-        $data = openssl_random_pseudo_bytes(16);
-        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // 指定 UUID 版本为 4
-        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // 标记为 UUID 变体
-        $uuid = vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-    }
-
-    return $uuid;
-}
+$conn = linkDB();
 
  // Check if connection is successful
 if (!$conn) {
@@ -34,7 +13,6 @@ if (!$conn) {
 } else{
     //生成pid
     $pid = generateUuid();
-    $pid = md5($pid);
     //uid
     $uid = $_COOKIE['token'];
     //接收数据
@@ -66,7 +44,7 @@ if (!$conn) {
     $stmt1->close();
     $stmt2->close();
 }
-mysqli_close($conn);
+$conn->close();
 //返回用户数据编辑状态信息给ajax
 $response = array(
     'status' => $status,

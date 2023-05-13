@@ -1,14 +1,9 @@
 <?php
 
-$config = include 'config.php';
-//初始化数据库信息
-$mysqlHost = $config['mysqlHost'];
-$mysqlUsername = $config['mysqlUsername'];
-$mysqlPassword = $config['mysqlPassword'];
-$mysqlDbname = $config['mysqlDbname'];
+include 'common.php';
 
 // 创建与 MySQL 数据库的连接
-$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
+$conn = linkDB();
 
 // 检查连接是否成功
 if ($conn->connect_error) {
@@ -30,16 +25,14 @@ function SQLtoJSON($conn, $sql, $filedName){
     return $data;
 }
 
-$Data = array(
+$response = array(
     '血压数据' => SQLtoJSON($conn, $sql1, '血压数据'),
     '血氧数据' => SQLtoJSON($conn, $sql2, '血氧数据'),
     '脉搏数据' => SQLtoJSON($conn, $sql3, '脉搏数据'),
     '心电数据' => SQLtoJSON($conn, $sql4, '心电数据'),
     '脑电数据' => SQLtoJSON($conn, $sql5, '脑电数据')
 );
-
-$ResponseData = json_encode($Data, JSON_UNESCAPED_UNICODE);
-echo $ResponseData;
+echo json_encode($response);
 
 // 关闭数据库连接
 $conn->close();

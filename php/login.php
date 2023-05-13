@@ -1,16 +1,9 @@
 <?php
 
-include 'encrypt.php';
-$config = include 'config.php';
-
-//初始化数据库信息
-$mysqlHost = $config['mysqlHost'];
-$mysqlUsername = $config['mysqlUsername'];
-$mysqlPassword = $config['mysqlPassword'];
-$mysqlDbname = $config['mysqlDbname'];
+include 'common.php';
 
 // 创建与 MySQL 数据库的连接
-$conn = new mysqli($mysqlHost, $mysqlUsername, $mysqlPassword, $mysqlDbname);
+$conn = linkDB();
 
  // Check if connection is successful
 if (!$conn) {
@@ -21,7 +14,8 @@ if (!$conn) {
     //下面实现已有账号的登录功能
     $loginAccount = $_POST['loginAccount'];
     $password = $_POST['loginPswd'];
-    //判断登录方式为邮箱或用户名，并查询对应的密码
+    //正则表达式判断登录方式为邮箱或用户名，并查询对应的密码
+    //此正则表达式验证是否为邮箱格式
     $pattern = "/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/";
     if (preg_match($pattern, $loginAccount)){
         $Account = "email";
@@ -52,7 +46,7 @@ if (!$conn) {
         }
     }
 }
-mysqli_close($conn);
+$conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
