@@ -1,7 +1,7 @@
 $(document).ready(function(){
     //查询用户账户信息
     $.ajax({
-        url: '/php/getUserInfo.php',
+        url: '../php/getUserInfo.php',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -34,11 +34,12 @@ $(document).ready(function(){
         $("#btn_profile_submit_cancel").hide();
         $(".show_profile").show();
         $("#btn_edit_profile").show();
-    })
+    });
+    //提交用户修改信息
     $("#btn_submit_profile").click(function(){
         if (phoneNumCheck() && idNumCheck()){
             $.ajax({
-                url: '/php/editUserProfile.php',
+                url: '../php/editUserProfile.php',
                 method: 'POST',
                 data: $('#formEditProfile').serialize(),
                 dataType: 'json',

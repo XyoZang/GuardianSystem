@@ -61,7 +61,7 @@
           </a>
         </li>
         <li>
-          <a href="../home/" class="nav-link active">
+          <a href="../home/" class="nav-link link-dark">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#people-circle" />
             </svg>
@@ -69,7 +69,7 @@
           </a>
         </li>
         <li>
-          <a href="../data/" class="nav-link link-dark">
+          <a href="../data/" class="nav-link active">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2" />
             </svg>
@@ -104,64 +104,82 @@
     </nav>
     <!-- 布局内容主体 -->
     <main class="holyGrail-content">
-      <!-- 用户信息界面 -->
-      <!-- 用户头像 -->
-      <!-- 账号信息：用户名/密码/邮箱 -->
-      <div class="div_Account">
-        <h2>账号</h2>
-        <span>用户名：</span>
-        <span id="userName"></span>
-        <span>邮箱：</span>
-        <span id="userEmail"></span>
-      </div>
-      <!-- 个人信息：姓名/性别/电话号码/身份证号 -->
-      <div class="div_profile">
-        <div class="show_profile">
-          <h2>个人信息</h2>
-          <span>姓    名：</span>
-          <span id="name"></span>
-          <br>
-          <span>性    别：</span>
-          <span id="gender"></span>
-          <br>
-          <span>电话号码：</span>
-          <span id="phone_number"></span>
-          <br>
-          <span>身份证号：</span>
-          <span id="id_number"></span>
-        </div>
-        <div class="edit_profile" style="display: none;">
-          <form id="formEditProfile" onsubmit="return false;">
-            <h3>用户信息</h3>
-            <div class="mb-3 mt-3">
-                <label for="edit_name" class="form-label">姓&nbsp;&nbsp;&nbsp;名:</label>
-                <input type="text" class="form-control" id="edit_name" name="edit_name" required>
-            </div>
-            <div class="mb-3">
-                <label for="edit_gender" class="form-label">性&nbsp;&nbsp;&nbsp;别：</label>
-                <input type="text" class="form-control" id="edit_gender" name="edit_gender" required>
-            </div>
-            <div class="mb-3">
-                <label  for="edit_phone_number" class="form-label">电话号码</label>
-                    <input type="text" class="form-control"  id="edit_phone_number" name="edit_phone_number" onblur="phoneNumCheck()" required="required">
-                    <span id="phoneNumCheckSpan"  style="color: red"></span>
-            </div>
-            <div class="mb-3">
-                <label for="edit_id_number" class="form-label">身份证号</label>
-                <input type="text" class="form-control" id="edit_id_number" name="edit_id_number" onblur="idNumCheck()" required>
-                <span id="idNumCheckSpan"  style="color: red"></span>
-            </div>
-          </form>
-        </div>
-        <button class='btn btn-primary' type="button" id="btn_edit_profile">编辑</button>
-        <div id="btn_profile_submit_cancel" style="display: none;">
-          <button class="btn btn-primary" type="button" id="btn_submit_profile">保存</button>
-          <button class="btn btn-primary" type="button" id="btn_cancel_profile">取消</button>
-        </div>
+      <!-- 监测人div -->
+      <div class="div_patient">
+        <!-- 监测人列表 -->
+        <table class="table table-bordered table-striped table-hover">
+            <!-- 表头 -->
+            <thead>
+              <tr>
+                <th>序号</th><th>姓名</th><th>年龄</th><th>操作</th>
+              </tr>
+            </thead>
+            <!-- 表体内容 -->
+            <tbody id="patientList"></tbody>
+        </table>
+        <!-- 添加监测人按钮 -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPatientModal">添加监测人</button>
       </div>
     </main>
     <!-- 边栏 -->
     <!-- <aside class="holyGrail-ads"></aside> -->
+    <!-- 添加被检测人模态框 -->
+    <div class="modal fade" id="addPatientModal">
+        <div class="modal-dialog">
+        <div class="modal-content">
+    
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+            <h4 class="modal-title">添加监测人</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- 模态框内容 -->
+            <div class="modal-body">
+                <form id="formAddPatient" onsubmit="return false;">
+                    <h3>监测人信息</h3>
+                    <div class="mb-3 mt-3">
+                        <label for="name" class="form-label">姓&nbsp;&nbsp;&nbsp;名:</label>
+                        <input type="text" class="form-control" id="name" placeholder="请输入姓名" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_number" class="form-label">身份证号:</label>
+                        <input type="text" class="form-control" id="id_number" placeholder="请输入身份证号" name="id_number" required>
+                        <span id="pswdCheckSpan"  style="color: red"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label  for="gender" class="form-label">性&nbsp;&nbsp;&nbsp;别：</label>
+                            <input type="text" class="form-control"  id="gender" placeholder="请输入性别" name="gender" required>
+                            <span id="pswdConfSpan"  style="color: red"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">年&nbsp;&nbsp;&nbsp;龄:</label>
+                        <input type="text" class="form-control" id="age" placeholder="请输入年龄" name="age" required>
+                        <span id="emailCheckSpan"  style="color: red"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">手机号:</label>
+                        <input type="text" class="form-control" id="phone_number" placeholder="请输入手机号" name="phone_number" required>
+                        <span id="emailCheckSpan"  style="color: red"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="relation" class="form-label">血缘关系:</label>
+                        <input type="text" class="form-control" id="relation" placeholder="您与被检测人的关系" name="relation" required>
+                        <span id="emailCheckSpan"  style="color: red"></span>
+                    </div>
+                </form>
+            </div>
+    
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <!-- <a href="Test.html?p=Login" class="hrefButton">已有帐号，点此去登录</a> -->
+                <button type="button" class="btn btn-primary" id="addPatientBtn">添加</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">取消</button>
+            </div>
+    
+        </div>
+        </div>
+    </div>
   </div>
   <footer></footer>
 
@@ -251,7 +269,7 @@
   <script src="../js/bootstrap-5.1.3/bootstrap.bundle.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
   <script src="../js/main.js"></script>
-  <script src="../js/home.js"></script>
+  <script src="../js/data.js"></script>
 </body>
 
 </html>
