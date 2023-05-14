@@ -20,14 +20,16 @@
   <!-- 顶部导航栏 -->
   <header class="shadow nav_flex">
     <!-- logo与标题 -->
-    <div class="logo">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none" style="margin: auto;">
+    <div class="logo toggle-width">
+        <a href="/" class="d-flex align-items-center justify-content-center mb-2 mb-lg-0 text-dark text-decoration-none" style="margin: auto;">
         <object data="../src/icon.svg" class="bi me-2" width="40" height="32" role="img"></object>
-        <span class="fs-4">首页</span>
+        <span class="fs-4 side_collapse">首页</span>
         </a>
     </div>
     <!-- 折叠按钮 -->
-    <i class="bi me-2 fa fa-navicon" style="font-size:1.5rem;"></i>
+    <a role="button" onclick="toggleSide()">
+      <i class="bi me-2 fa fa-navicon" style="color: black; font-size:1.5rem; padding-left: 15px;"></i>
+    </a>
     <!-- 头像与下拉菜单 -->
     <div class="dropdown text-end avartar loginTrue">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
@@ -48,46 +50,46 @@
   </header>
   <div class="holyGrail-Body">
     <!-- 侧边导航栏 -->
-    <nav class="holyGrail-nav side_flex">
+    <nav class="holyGrail-nav side_flex toggle-width">
         <hr>
         <!-- 选项栏 -->
         <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="#" class="nav-link link-dark" aria-current="page">
-            <i class="bi me-2 fa fa-home"></i>
-            Home
-            </a>
-        </li>
-        <li>
-            <a href="../home/" class="nav-link link-dark">
-            <i class="bi me-2 fa fa-user-circle-o"></i>
-            个人信息
-            </a>
-        </li>
-        <li>
-            <a href="../data/" class="nav-link link-dark">
-            <i class="bi me-2 fa fa-dashboard"></i>
-            监测数据
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link link-dark">
-            <i class="bi me-2 fa fa-bar-chart"></i>
-            Orders
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link link-dark">
-            <i class="bi me-2 fa fa-plus-square-o"></i>
-            Products
-            </a>
-        </li>
+          <li class="nav-item">
+              <a href="#" class="nav-link link-dark" aria-current="page">
+              <i class="bi me-2 fa fa-home"></i>
+              <span class="side_collapse">Home</span>
+              </a>
+          </li>
+          <li>
+              <a href="../home/" class="nav-link link-dark active">
+              <i class="bi me-2 fa fa-user-circle-o"></i>
+              <span class="side_collapse">个人信息</span>
+              </a>
+          </li>
+          <li>
+              <a href="../data/" class="nav-link link-dark">
+              <i class="bi me-2 fa fa-dashboard"></i>
+              <span class="side_collapse">监测数据</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" class="nav-link link-dark">
+              <i class="bi me-2 fa fa-bar-chart"></i>
+              <span class="side_collapse">Orders</span>
+              </a>
+          </li>
+          <li>
+              <a href="#" class="nav-link link-dark">
+              <i class="bi me-2 fa fa-plus-square-o"></i>
+              <span class="side_collapse">Products</span>
+              </a>
+          </li>
         </ul>
         <hr>
         <!-- 导航脚 -->
         <div class="nav-link link-dark">
-        <!-- 设置按钮 -->
-        <i class="bi me-2 fa fa-cog" style="font-size:1.5rem;"></i>
+          <!-- 设置按钮 -->
+          <i class="bi me-2 fa fa-cog" style="font-size:1.5rem;"></i>
         </div>
     </nav>
     <!-- 布局内容主体 -->

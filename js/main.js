@@ -24,3 +24,7 @@ function Msg(response, successFunc){
         Qmsg.error("失败："+response["msg"]);
     }
 }
+function toggleSide(){
+    $('.side_collapse').toggle();
+    $(".toggle-width").toggleClass('sidebar-icon-only');
+}

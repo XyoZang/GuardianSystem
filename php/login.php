@@ -39,7 +39,7 @@ if (!$conn) {
             $ro = $re->fetch_assoc();
             $uid = $ro["uid"];
             // $token = encrypt($uid);
-            setcookie("token", $uid, time()+1800, '/');
+            setcookie("token", $uid, 0, '/');
         }else{
             $status = "Failed";
             $info = "密码错误！";

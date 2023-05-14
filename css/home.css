@@ -25,6 +25,10 @@ footer {
     flex: 0 0 12em;
 }
 
+.sidebar-icon-only {
+    flex: 0 0 3em;
+}
+
 .holyGrail-nav {
     /* 导航放到最左边 */
     order: -1;
@@ -51,35 +55,31 @@ footer {
 .side_flex {
     display: -webkit-flex;
     display: flex;
-    width: 280px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     background-color: #ffffff;
-    border-radius: 10px;
     transition: .3s;
     overflow: hidden;
+    white-space: nowrap;
 }
 
 .nav_flex {
     display: -webkit-flex;
     display: flex;
     background-color: #ffffff;
+    transition: .3s;
     align-items: center;
     z-index: 1030;
 }
 
 .logo {
     width: 12em;
-    justify-content: center;
 }
 
 .avartar {
     margin-left: auto;
-}
-
-.collicon {
-    border-radius: 10px;
+    padding-right: 25px;
 }
 
 .div_Account {
