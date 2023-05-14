@@ -16,7 +16,7 @@
 <body class="holyGrail">
   <!-- 圣杯布局 -->
   <!-- 顶部导航栏 -->
-  <header class="nav_flex">
+  <header class="shadow nav_flex">
     <!-- logo与标题 -->
     <div class="logo">
       <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none" style="margin: auto;">
@@ -105,9 +105,10 @@
     <!-- 布局内容主体 -->
     <main class="holyGrail-content">
       <!-- 监测人div -->
-      <div class="div_patient">
-        <!-- 监测人列表 -->
-        <table class="table table-bordered table-striped table-hover">
+      <div class="patient-list card div_patient">
+        <div class="card-body">
+          <!-- 监测人列表 -->
+          <table class="table table-bordered table-striped table-hover">
             <!-- 表头 -->
             <thead>
               <tr>
@@ -116,9 +117,10 @@
             </thead>
             <!-- 表体内容 -->
             <tbody id="patientList"></tbody>
-        </table>
-        <!-- 添加监测人按钮 -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPatientModal">添加监测人</button>
+          </table>
+          <!-- 添加监测人按钮 -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPatientModal">添加监测</button>
+        </div> 
       </div>
     </main>
     <!-- 边栏 -->

@@ -16,7 +16,7 @@ footer {
 
 .holyGrail-content {
     flex: 1;
-    background-color: beige;
+    background-color: #f5f7ff;
 }
 
 .holyGrail-nav,
@@ -55,7 +55,7 @@ footer {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: lightslategray;
+    background-color: #ffffff;
     border-radius: 10px;
     transition: .3s;
     overflow: hidden;
@@ -64,9 +64,9 @@ footer {
 .nav_flex {
     display: -webkit-flex;
     display: flex;
-    border-radius: 12px;
-    background-color: lightgrey;
+    background-color: #ffffff;
     align-items: center;
+    z-index: 1030;
 }
 
 .logo {
@@ -80,4 +80,17 @@ footer {
 
 .collicon {
     border-radius: 10px;
+}
+
+.div_Account {
+    max-width: 50%;
+    margin: 50px;
+}
+
+.div_profile {
+    max-width: 40%;
+}
+
+.patient-list{
+    margin: 50px;
 }
