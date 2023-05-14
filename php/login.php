@@ -50,7 +50,7 @@ $conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
-    'message' => $info,
+    'msg' => $info,
     "log" => $log
 );
 echo json_encode($response);

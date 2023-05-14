@@ -41,7 +41,7 @@ if (!$conn) {
         $info = "保存成功！";
     }else{
         $status = "Failed";
-        $info = "数据插入失败！";
+        $info = "保存失败！";
         $log = "Error: " . mysqli_error($conn);
     }
     $stmt->close();
@@ -50,7 +50,7 @@ $conn->close();
 //返回用户数据编辑状态信息给ajax
 $response = array(
     'status' => $status,
-    'message' => $info,
+    'msg' => $info,
     "log" => $log,
 );
 echo json_encode($response);

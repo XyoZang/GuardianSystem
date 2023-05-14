@@ -46,13 +46,20 @@ $(document).ready(function(){
                 success: function(response) {
                     // 处理服务器返回的数据
                     console.log(response);
+                    Msg(response, function() {
+                        $("#btn_cancel_profile").click();
+                        $("#name").html($("#edit_name").val());
+                        $("#gender").html($("#edit_gender").val());
+                        $("#phone_number").html($("#edit_phone_number").val());
+                        $("#id_number").html($("#edit_id_number").val());
+                    });
                 },
                 error: function(xhr, status, error) {
                     console.log('Ajax连接失败');
                 }
             });
         } else{
-            console.log("请检查输入信息！");
+            Qmsg.error("失败：请检查信息格式！");
         }
     })
 });

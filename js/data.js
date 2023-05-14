@@ -25,9 +25,12 @@ $(document).ready(function(){
             method: 'POST',
             data: $('#formAddPatient').serialize(),
             dataType: 'json',
-            success: function(data) {
+            success: function(response) {
                 // 处理服务器返回的数据
-                console.log(data);
+                console.log(response);
+                Msg(response, function() {
+                    $("#btnAddPatientCancel").click();
+                });
             },
             error: function(xhr, status, error) {
                 console.log('连接失败');

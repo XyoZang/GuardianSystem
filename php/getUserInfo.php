@@ -31,13 +31,13 @@ $conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
+    "info" => $info,
     'userName' => $rowA["user_name"],
     'userEmail' => $rowA["email"],
     'name' => $rowP["name"],
     'gender' => $rowP["gender"],
     'phone_number' => $rowP["phone_number"],
-    'id_number' => $rowP["id_number"],
-    "info" => $info
+    'id_number' => $rowP["id_number"]
 );
 echo json_encode($response);
 ?>

@@ -47,17 +47,16 @@ $('#registBtn').click(function() {
             success: function(response) {
                 // 处理服务器返回的数据
                 console.log(response);
-                if (response["status"]=="Success"){
-                    Qmsg.success("提示：注册成功！");
+                Msg(response, function() {
                     $("#registModalDismiss").click();
-                }
+                });
             },
             error: function(xhr, status, error) {
                 console.log('连接失败');
             }
         });
     } else{
-        console.log("请检查输入信息是否正确！");
+        Qmsg.error("失败：请检查信息格式！");
     }
 });
 //登录表单提交
@@ -71,12 +70,11 @@ $('#loginBtn').click(function() {
             success: function(response) {
                 // 处理服务器返回的数据
                 console.log(response);
-                if (response["status"]=="Success"){
-                    Qmsg.success("提示：登录成功！");
+                Msg(response, function() {
                     $(".loginFalse").hide();
                     $(".loginTrue").show();
                     $("#loginModalDismiss").click();
-                }
+                });
             },
             error: function(xhr, status, error) {
                 console.log(error);

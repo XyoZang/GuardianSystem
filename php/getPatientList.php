@@ -47,7 +47,7 @@ $conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
-    "info" => $info,
+    "msg" => $info,
     'data' => $patientList
 );
 echo json_encode($response);

@@ -6,6 +6,7 @@ if ($.cookie('token')){
     logined = false;
     if (window.location.pathname != '/'){
         console.log("查询失败，请先登录！");
+        Qmsg.error("失败：请先登录！");
     }
     $(".loginFalse").show();
 }
@@ -13,5 +14,13 @@ function logOut(){
     if ($.removeCookie('token', {path: '/'})){
         logined = false;
         window.location.href = '/';
+    }
+}
+function Msg(response, successFunc){
+    if (response["status"]=="Success"){
+        Qmsg.success("提示："+response["msg"]);
+        successFunc();
+    }else if(response["status"]=="Failed"){
+        Qmsg.error("失败："+response["msg"]);
     }
 }
