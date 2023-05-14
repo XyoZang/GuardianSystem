@@ -28,3 +28,12 @@ function toggleSide(){
     $('.side_collapse').toggle();
     $(".toggle-width").toggleClass('sidebar-icon-only');
 }
+$(document).ready(function() {
+    $('.nav-pills .nav-link').hover(function() {
+        $(this).addClass('active');
+    }, function() {
+        if (!$(this).is($(".fix"))) {
+            $(this).removeClass('active');
+        }
+    });
+});
