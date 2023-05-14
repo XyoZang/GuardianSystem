@@ -40,7 +40,7 @@ function emailCheck(){
 $('#registBtn').click(function() {
     if (pswdCheck() && pswdConf() && emailCheck()){
         $.ajax({
-            url: 'php/regist.php',
+            url: '../php/regist.php',
             method: 'POST',
             data: $('#formRegist').serialize(),
             dataType: 'json',
@@ -63,9 +63,9 @@ $('#registBtn').click(function() {
 $('#loginBtn').click(function() {
     if ($("#loginAccount").val()){
         $.ajax({
-            url: 'php/login.php',
+            url: '../php/getLoginStatus.php',
             method: 'POST',
-            data: $('#formLogin').serialize(),
+            data: 'Request=Login&'+$('#formLogin').serialize(),
             dataType: 'json',
             success: function(response) {
                 // 处理服务器返回的数据
@@ -81,6 +81,6 @@ $('#loginBtn').click(function() {
             }
         });
     } else{
-        console.log("请输入用户名")
+        Qmsg.error("请输入用户名！");
     }
 });

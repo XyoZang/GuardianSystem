@@ -1,6 +1,7 @@
 <?php
 
 include 'common.php';
+session_start();
 
 // 创建与 MySQL 数据库的连接
 $conn = linkDB();
@@ -24,6 +25,7 @@ if (!$conn) {
             $pidList[] = $row['pid'];
         }
         $patientList = array();
+        $pindex = 0;
         foreach ($pidList as $pid){
             $re = $conn->query("SELECT name, age FROM patient_profile WHERE pid='$pid'");
             if ($re->num_rows<1) {
@@ -39,6 +41,8 @@ if (!$conn) {
                         'age' => $r['age']
                     );
                 }
+                $pindex += 1;
+                $_SESSION['pindex' . $pindex] = $pid;
             }
         }
     }
@@ -48,7 +52,8 @@ $conn->close();
 $response = array(
     'status' => $status,
     "msg" => $info,
-    'data' => $patientList
+    'data' => $patientList,
+    'se' => $_SESSION['uid']
 );
 echo json_encode($response);
 ?>

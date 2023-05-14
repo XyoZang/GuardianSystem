@@ -1,20 +1,58 @@
-if ($.cookie('token')){
-    console.log("已登录");
-    logined = true;
-    $(".loginTrue").show();
-} else{
-    logined = false;
-    if (window.location.pathname != '/'){
-        console.log("查询失败，请先登录！");
-        Qmsg.error("失败：请先登录！");
-    }
-    $(".loginFalse").show();
+function getLoginStatus(){
+    $.ajax({
+        url: '../php/getLoginStatus.php',
+        method: 'POST',
+        data: 'Request=getStatus',
+        dataType: 'json',
+        success: function(response) {
+            // 处理服务器返回的数据
+            console.log(response);
+            if (response['data']=='Login'){
+                $(".loginTrue").show();
+                console.log("已登录");
+            }else if (response['data']=='LogOut'){
+                $(".loginFalse").show();
+                console.log("请先登录！");
+                if (window.location.pathname != '/'){
+                    Qmsg.error("失败：请先登录！");
+                }
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
 }
+// if ($.cookie('token')){
+//     console.log("已登录");
+//     logined = true;
+//     $(".loginTrue").show();
+// } else{
+//     logined = false;
+//     if (window.location.pathname != '/'){
+//         console.log("查询失败，请先登录！");
+//         Qmsg.error("失败：请先登录！");
+//     }
+//     $(".loginFalse").show();
+// }
 function logOut(){
-    if ($.removeCookie('token', {path: '/'})){
-        logined = false;
-        window.location.href = '/';
-    }
+    $.ajax({
+        url: '../php/getLoginStatus.php',
+        method: 'POST',
+        data: 'Request=LogOut',
+        dataType: 'json',
+        success: function(response) {
+            // 处理服务器返回的数据
+            console.log(response);
+            Msg(response, function() {
+                $.removeCookie('token', {path: '/'});
+                window.location.href = '/';
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
 }
 function Msg(response, successFunc){
     if (response["status"]=="Success"){
@@ -29,6 +67,7 @@ function toggleSide(){
     $(".toggle-width").toggleClass('sidebar-icon-only');
 }
 $(document).ready(function() {
+    getLoginStatus();
     $('.nav-pills .nav-link').hover(function() {
         $(this).addClass('active');
     }, function() {

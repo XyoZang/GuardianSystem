@@ -1,24 +1,5 @@
 $(document).ready(function(){
-    //查询用户所绑定的监测人信息
-    $.ajax({
-        url: '../php/getPatientList.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            // 处理服务器返回的数据
-            console.log(response);
-            if (response['data']){
-                response['data'].forEach(function(element, index) {
-                    var newHTML = '<tr><td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td>查看 -- 删除</td></tr>';
-                    console.log(newHTML);
-                    $("#patientList").append(newHTML);
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log('Ajax连接失败');
-        }
-    });
+    updatePatient();
     //添加监测人表单提交
     $('#addPatientBtn').click(function() {
         $.ajax({
@@ -31,6 +12,7 @@ $(document).ready(function(){
                 console.log(response);
                 Msg(response, function() {
                     $("#btnAddPatientCancel").click();
+                    updatePatient();
                 });
             },
             error: function(xhr, status, error) {
@@ -39,3 +21,28 @@ $(document).ready(function(){
         });
     });
 });
+//查询用户所绑定的监测人信息
+function updatePatient(){
+    $.ajax({
+        url: '../php/getPatientList.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            // 处理服务器返回的数据
+            console.log(response);
+            if (response['data']){
+                $("#patientList").html("");
+                response['data'].forEach(function(element, index) {
+                    var newHTML = '<tr><td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td><a href="javascript:void(0);" onclick="toShowPage('+(index+1)+')">查看</a></td></tr>';
+                    $("#patientList").append(newHTML);
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log('Ajax连接失败');
+        }
+    });
+}
+function toShowPage(index){
+    window.location.href = './data.html?pindex='+index;
+}
