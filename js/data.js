@@ -9,8 +9,9 @@ $(document).ready(function(){
             console.log(response);
             if (response['data']){
                 response['data'].forEach(function(element, index) {
-                    var newHTML = '<tr>'+$("#patientList").html()+'<td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td>查看</td></tr>';
-                    $("#patientList").html(newHTML);
+                    var newHTML = '<tr><td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td>查看 -- 删除</td></tr>';
+                    console.log(newHTML);
+                    $("#patientList").append(newHTML);
                 });
             }
         },
