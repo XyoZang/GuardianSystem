@@ -25,15 +25,14 @@ if (!$conn) {
     $now_time = date("Y-m-d H:i:s");
     // 查询被监测人信息表中是否存在该身份证号
     $sql = "SELECT * FROM link_user_patient JOIN patient_profile ON link_user_patient.pid=patient_profile.pid WHERE id_number='$id_number' AND uid='$uid'";
-    //SQL语句插入被检测人信息表与链接表
-    $sql1 = "INSERT INTO patient_profile (pid, name, id_number, phone_number, gender, age, update_time) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $sql2 = "INSERT INTO link_user_patient (pid, uid, relation, create_time) VALUES (?, ?, ?, ?)";
-    $stmt1 = $conn->prepare($sql1);
-    $stmt2 = $conn->prepare($sql2);
     $result = $conn->query($sql);
     // 如果查询结果为空，则表示没有与该身份证号相同的记录
     if ($result->num_rows == 0) {
         //SQL语句插入被检测人信息表与链接表
+        $sql1 = "INSERT INTO patient_profile (pid, name, id_number, phone_number, gender, age, update_time) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql2 = "INSERT INTO link_user_patient (pid, uid, relation, create_time) VALUES (?, ?, ?, ?)";
+        $stmt1 = $conn->prepare($sql1);
+        $stmt2 = $conn->prepare($sql2);
         $stmt1->bind_param("ssiisis", $pid, $name, $id_number, $phone_number, $gender, $age, $now_time);
         $stmt2->bind_param("ssss", $pid, $uid, $relation, $now_time);
         $stmt1->execute();

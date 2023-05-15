@@ -33,7 +33,8 @@ function updatePatient(){
             if (response['data']){
                 $("#patientList").html("");
                 response['data'].forEach(function(element, index) {
-                    var newHTML = '<tr><td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+'</td><td><a href="javascript:void(0);" onclick="toShowPage('+(index+1)+')">查看</a></td></tr>';
+                    var newHTML = '<tr><td>'+(index+1)+'</td><td>'+element['name']+'</td><td>'+element['age']+
+                    '</td><td><a type="button" class="btn btn-primary btnList" href="javascript:void(0);" onclick="toShowPage('+(index+1)+')">查看</a><a type="button" class="btn btn-danger" href="javascript:void(0);" onclick="deletePatient('+(index+1)+')">删除</a></td></tr>';
                     $("#patientList").append(newHTML);
                 });
             }
@@ -45,4 +46,22 @@ function updatePatient(){
 }
 function toShowPage(index){
     window.location.href = './data.html?pindex='+index;
+}
+function deletePatient(index){
+    $.ajax({
+        url: '../php/getPatientData.php',
+        method: 'POST',
+        data: 'Request=delete&pindex='+index,
+        dataType: 'json',
+        success: function(response) {
+            // 处理服务器返回的数据
+            console.log(response);
+            Msg(response, function() {
+                updatePatient();
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log('连接失败');
+        }
+    });
 }

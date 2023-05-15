@@ -52,8 +52,7 @@ $conn->close();
 $response = array(
     'status' => $status,
     "msg" => $info,
-    'data' => $patientList,
-    'se' => $_SESSION['uid']
+    'data' => $patientList
 );
 echo json_encode($response);
 ?>
