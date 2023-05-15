@@ -9,7 +9,7 @@ $conn = linkDB();
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
     $status = "Failed";
-    $info = "服务器连接失败！";
+    $msg = "服务器连接失败！";
 } else{
     // Insert data into database
     $userName = $_POST['userName'];
@@ -28,10 +28,10 @@ if (!$conn) {
     // 判断用户输入的信息是否已经被录入
     if (in_array($userName, $IDlist)) {
         $status = "Failed";
-        $info = "该用户名已被注册！";
+        $msg = "该用户名已被注册！";
     } elseif (in_array($userEmail, $Emaillist)) {
         $status = "Failed";
-        $info = "该邮箱已被注册！";
+        $msg = "该邮箱已被注册！";
     }
     else {
         //用户密码加密
@@ -48,12 +48,12 @@ if (!$conn) {
         if($result === false) {
             //查询失败
             $status = "Failed";
-            $info = "数据插入失败！";
+            $msg = "数据插入失败！";
             $log = "Error: " . mysqli_error($conn);
          } else {
             //查询成功
             $status = "Success";
-            $info = "注册成功！";
+            $msg = "注册成功！";
             $log =  "Number of rows: " . mysqli_affected_rows($conn);
          }
     }
@@ -63,7 +63,7 @@ $conn->close();
 //返回用户注册状态信息给ajax
 $response = array(
     'status' => $status,
-    'msg' => $info,
+    'msg' => $msg,
     "log" => $log
 );
 echo json_encode($response);

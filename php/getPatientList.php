@@ -10,7 +10,7 @@ $conn = linkDB();
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
     $status = "Failed";
-    $info = "服务器连接失败！";
+    $msg = "服务器连接失败！";
 } else{
     //根据token解码出uid用以查询
     $uid = $_COOKIE["token"];
@@ -18,7 +18,7 @@ if (!$conn) {
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){
         $status = "Failed";
-        $info = "查询失败或尚未绑定监测人！";
+        $msg = "查询失败或尚未绑定监测人！";
     } else{
         $pidList = array();
         while ($row = $result->fetch_assoc()) {
@@ -30,10 +30,10 @@ if (!$conn) {
             $re = $conn->query("SELECT name, age FROM patient_profile WHERE pid='$pid'");
             if ($re->num_rows<1) {
                 $status = 'Failed';
-                $info = '病人信息查询失败';
+                $msg = '病人信息查询失败';
             } else{
                 $status = "Success";
-                $info = "查询成功";
+                $msg = "查询成功";
                 while ($r = $re->fetch_assoc()) {
                     $patientList[] = array(
                         'pid' => $pid,
@@ -51,7 +51,7 @@ $conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
-    "msg" => $info,
+    "msg" => $msg,
     'data' => $patientList
 );
 echo json_encode($response);

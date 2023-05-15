@@ -10,7 +10,7 @@ $conn = linkDB();
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
     $status = "Failed";
-    $info = "服务器连接失败！";
+    $msg = "服务器连接失败！";
 } else{
     $Request = $_POST['Request'];
     if ($Request=='Login'){
@@ -29,14 +29,14 @@ if (!$conn) {
         // 将查询结果赋值给变量
         if ($result->num_rows < 1){
             $status = "Failed";
-            $info = "用户名错误或尚未注册！";
+            $msg = "用户名错误或尚未注册！";
         } else{
             $row = $result->fetch_assoc();
             $mima = $row["password"];
             //验证数据库中录入的信息
             if ($password == $mima) {
                 $status = "Success";
-                $info = "登录成功！";
+                $msg = "登录成功！";
                 //获取用户ID并加密生成token,生成cookie用于保持登陆状态
                 $re = $conn->query("SELECT uid FROM user_account WHERE $Account='$loginAccount'");
                 $ro = $re->fetch_assoc();
@@ -46,13 +46,13 @@ if (!$conn) {
                 $_SESSION['uid'] = $uid;
             }else{
                 $status = "Failed";
-                $info = "密码错误！";
+                $msg = "密码错误！";
             }
         }
     } else if ($Request=='LogOut'){
         session_destroy();
         $status = 'Success';
-        $info = '您已退出登录！';
+        $msg = '您已退出登录！';
     } else if ($Request=='getStatus'){
         //查询uid是否存在来判定
         if (isset($_SESSION['uid'])){
@@ -64,14 +64,14 @@ if (!$conn) {
         }
     } else{
         $status = 'Failed';
-        $info = '出错了！';
+        $msg = '请求参数错误！';
     } 
 }
 $conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
-    'msg' => $info,
+    'msg' => $msg,
     "data" => $data
 );
 echo json_encode($response);

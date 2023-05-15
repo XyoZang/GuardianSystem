@@ -9,7 +9,7 @@ $conn = linkDB();
 if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
     $status = "Failed";
-    $info = "服务器连接失败！";
+    $msg = "服务器连接失败！";
 } else{
     //接收数据
     $name = $_POST['edit_name']?$_POST['edit_name']:NULL;
@@ -38,10 +38,10 @@ if (!$conn) {
     $stmt->execute();
     if ($stmt->affected_rows > 0){
         $status = "Success";
-        $info = "保存成功！";
+        $msg = "保存成功！";
     }else{
         $status = "Failed";
-        $info = "保存失败！";
+        $msg = "保存失败！";
         $log = "Error: " . mysqli_error($conn);
     }
     $stmt->close();
@@ -50,7 +50,7 @@ $conn->close();
 //返回用户数据编辑状态信息给ajax
 $response = array(
     'status' => $status,
-    'msg' => $info,
+    'msg' => $msg,
     "log" => $log,
 );
 echo json_encode($response);

@@ -42,10 +42,10 @@ if ($Request=='Insert') {
         $stmt2->execute();
         if ($stmt1->affected_rows > 0 && $stmt2->affected_rows > 0){
             $status = "Success";
-            $info = "保存成功！";
+            $msg = "保存成功！";
         }else{
             $status = "Failed";
-            $info = "数据插入失败！";
+            $msg = "数据插入失败！";
             $log = "Error: " . mysqli_error($conn) . $error1;
         }
         $stmt1->close();
@@ -58,19 +58,19 @@ if ($Request=='Insert') {
             $conn->query("INSERT INTO link_user_patient (pid, uid, relation, create_time) VALUES ('$pid', '$uid', '$relation', '$now_time')");
             if ($conn->affected_rows > 0){
                 $status = "Success";
-                $info = "保存成功！";
+                $msg = "保存成功！";
             } else {
                 $status = "Failed";
-                $info = "数据插入失败！";
+                $msg = "数据插入失败！";
             }
         } else {
             $status = "Failed";
-            $info = "请勿重复绑定！";
+            $msg = "请勿重复绑定！";
         }
         //若已绑定则不进行操作，提示用户绑定重复
     } else {
         $status = "Failed";
-        $info = "未知错误！";
+        $msg = "未知错误！";
     }
 } else if ($Request=='Edit') {
     if (isset($pid)){
@@ -84,36 +84,36 @@ if ($Request=='Insert') {
         $stmt->execute();
         if ($stmt->affected_rows > 0){
             $status = "Success";
-            $info = "保存成功！";
+            $msg = "保存成功！";
         }else{
             $status = "Failed";
-            $info = "数据插入失败！";
+            $msg = "数据插入失败！";
             $log = "Error: " . mysqli_error($conn) . $error1;
         }
         $stmt->close();
     } else {
         $status = "Failed";
-        $info = "资料不存在！";
+        $msg = "资料不存在！";
     }
 } else if ($Request=='Delete') {
     $conn->query("DELETE FROM link_user_patient WHERE pid='$pid' AND uid='$uid'");
     if ($conn->affected_rows > 0){
         $status='Success';
-        $info='删除成功！';
+        $msg='删除成功！';
     } else{
         $status='Failed';
-        $info='删除失败！';
+        $msg='删除失败！';
         $log="失败：" . mysqli_error($conn);
     }
 } else {
     $status = 'Failed';
-    $info = '请求参数错误！';
+    $msg = '请求参数错误！';
 }
 $conn->close();
 //返回用户数据编辑状态信息给ajax
 $response = array(
     'status' => $status,
-    'msg' => $info,
+    'msg' => $msg,
     "log" => $log,
 );
 echo json_encode($response);
