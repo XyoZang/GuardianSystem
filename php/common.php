@@ -74,4 +74,14 @@ function generateSalt($len=6){
     }
     return $salt;
 }
+
+//异常捕获函数
+function myException($exception) {
+    $response = array(
+        'status' => 'Failed',
+        'info' => 'ErrorLine: '.$exception->getLine(),
+        "log" => 'Error: '.$exception->getMessage(),
+    );
+    echo json_encode($response);
+}
 ?>

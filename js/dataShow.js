@@ -39,11 +39,11 @@ $(document).ready(function(){
     });
     //提交用户修改信息
     $("#btn_submit_patient_profile").click(function(){
-        if (phoneNumCheck() && idNumCheck()){
+        if (phoneNumCheck()){
             $.ajax({
                 url: '../php/editPatientProfile.php',
                 method: 'POST',
-                data: 'Request=edit&'+$('#formEditPatientProfile').serialize(),
+                data: 'Request=Edit&'+window.location.search.substring(1)+'&'+$('#formEditPatientProfile').serialize(),
                 dataType: 'json',
                 success: function(response) {
                     // 处理服务器返回的数据
@@ -87,19 +87,6 @@ function phoneNumCheck(){
         return true;
     }else {
         $("#phoneNumCheckSpan").html("手机号格式不正确！");
-        return false;
-    }
-}
-//校验身份证号, 由于身份证号可不填，要求text为空时同样可以通过
-function idNumCheck(){
-    var text= $("#edit_id_number").val();
-    var re18 = /^([1-6][1-9]|50)\d{4}(18|19|20)\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
-    var re15 =  /^([1-6][1-9]|50)\d{4}\d{2}((0[1-9])|10|11|12)(([0-2][1-9])|10|20|30|31)\d{3}$/;
-    if(re18.test(text) || re15.test(text) || !text) {
-        $("#idNumCheckSpan").html("");
-        return true;
-    } else {
-        $("#idNumCheckSpan").html("身份证号格式不正确！");
         return false;
     }
 }

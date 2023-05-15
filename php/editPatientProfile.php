@@ -1,20 +1,19 @@
 <?php
 
 include 'common.php';
+session_start();
+set_exception_handler('myException');
 
 // 创建与 MySQL 数据库的连接
 $conn = linkDB();
 
- // Check if connection is successful
-if (!$conn) {
-	die("Connection failed: " . mysqli_connect_error());
-    $status = "Failed";
-    $info = "服务器连接失败！";
-} else{
-    //生成pid
-    $pid = generateUuid();
-    //uid
-    $uid = $_COOKIE['token'];
+$Request = $_POST['Request'];
+$uid = $_COOKIE['token'];
+$now_time = date("Y-m-d H:i:s");
+$pid = $_SESSION['pindex'.$_POST['pindex']];
+$status = 'Failed';
+$info = '请求参数错误！';
+if ($Request=='Insert') {
     //接收数据
     $name = $_POST['name'];
     $id_number = $_POST['id_number'];
@@ -22,12 +21,17 @@ if (!$conn) {
     $gender = $_POST['gender']?$_POST['gender']:NULL;
     $age = $_POST['age']?$_POST['age']:NULL;
     $relation = $_POST['relation'];
-    $now_time = date("Y-m-d H:i:s");
-    // 查询被监测人信息表中是否存在该身份证号
-    $sql = "SELECT * FROM link_user_patient JOIN patient_profile ON link_user_patient.pid=patient_profile.pid WHERE id_number='$id_number' AND uid='$uid'";
-    $result = $conn->query($sql);
-    // 如果查询结果为空，则表示没有与该身份证号相同的记录
-    if ($result->num_rows == 0) {
+    //先根据用户输入的ID号码查询病人库中是否存在该病人
+    $result = $conn->query("SELECT pid FROM patient_profile WHERE id_number='$id_number'");
+    if ($result->num_rows>0){
+        $Profile_exist = true;
+        $pid = $result->fetch_assoc()['pid'];
+    } else {
+        $Profile_exist = false;
+    }
+    //若不存在则生成uuid并插入到病人库和连接库中
+    if (!$Profile_exist) {
+        $pid = generateUuid();
         //SQL语句插入被检测人信息表与链接表
         $sql1 = "INSERT INTO patient_profile (pid, name, id_number, phone_number, gender, age, update_time) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $sql2 = "INSERT INTO link_user_patient (pid, uid, relation, create_time) VALUES (?, ?, ?, ?)";
@@ -48,9 +52,60 @@ if (!$conn) {
         }
         $stmt1->close();
         $stmt2->close();
-    }else{
+    } else if ($Profile_exist){
+        //若病人存在于库中，则进一步查询病人是否已与用户绑定
+        $result = $conn->query("SELECT * FROM link_user_patient WHERE uid='$uid' AND pid='$pid'");
+        //若未绑定则直接将用户与病人绑定
+        if ($result->num_rows < 1) {
+            $conn->query("INSERT INTO link_user_patient (pid, uid, relation, create_time) VALUES ('$pid', '$uid', '$relation', '$now_time')");
+            if ($conn->affected_rows > 0){
+                $status = "Success";
+                $info = "保存成功！";
+            } else {
+                $status = "Failed";
+                $info = "数据插入失败！";
+            }
+        } else {
+            $status = "Failed";
+            $info = "请勿重复绑定！";
+        }
+        //若已绑定则不进行操作，提示用户绑定重复
+    } else {
         $status = "Failed";
-        $info = "绑定信息重复！";
+        $info = "未知错误！";
+    }
+} else if ($Request=='Edit') {
+    if (isset($pid)){
+        $name = $_POST['edit_name'];
+        $phone_number = $_POST['edit_phone_number']?$_POST['edit_phone_number']:NULL;
+        $gender = $_POST['edit_gender']?$_POST['edit_gender']:NULL;
+        $age = $_POST['edit_age']?$_POST['edit_age']:NULL;
+        $sql = "UPDATE patient_profile SET name = ?, phone_number = ?, gender = ?, age = ?, update_time = ? WHERE pid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sisiss", $name, $phone_number, $gender, $age, $now_time, $pid);
+        $stmt->execute();
+        if ($stmt->affected_rows > 0){
+            $status = "Success";
+            $info = "保存成功！";
+        }else{
+            $status = "Failed";
+            $info = "数据插入失败！";
+            $log = "Error: " . mysqli_error($conn) . $error1;
+        }
+        $stmt->close();
+    } else {
+        $status = "Failed";
+        $info = "资料不存在！";
+    }
+} else if ($Request=='Delete') {
+    $conn->query("DELETE FROM link_user_patient WHERE pid='$pid' AND uid='$uid'");
+    if ($conn->affected_rows > 0){
+        $status='Success';
+        $info='删除成功！';
+    } else{
+        $status='Failed';
+        $info='删除失败！';
+        $log="失败：" . mysqli_error($conn);
     }
 }
 $conn->close();
@@ -61,4 +116,5 @@ $response = array(
     "log" => $log,
 );
 echo json_encode($response);
+
 ?>

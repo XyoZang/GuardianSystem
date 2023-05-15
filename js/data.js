@@ -5,7 +5,7 @@ $(document).ready(function(){
         $.ajax({
             url: '../php/editPatientProfile.php',
             method: 'POST',
-            data: $('#formAddPatient').serialize(),
+            data: 'Request=Insert&'+$('#formAddPatient').serialize(),
             dataType: 'json',
             success: function(response) {
                 // 处理服务器返回的数据
