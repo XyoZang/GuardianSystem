@@ -71,8 +71,8 @@ $conn->close();
 //返回用户登录状态信息给ajax
 $response = array(
     'status' => $status,
-    "data" => $data,
-    'msg' => $info
+    'msg' => $info,
+    "data" => $data
 );
 echo json_encode($response);
 ?>

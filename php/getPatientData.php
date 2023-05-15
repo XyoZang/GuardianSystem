@@ -13,34 +13,22 @@ if (!$conn) {
     $info = "服务器连接失败！";
 } else{
     $pid = $_SESSION['pindex'.$_POST['pindex']];
-    if ($_POST['Request']=='delete'){
-        $result = $conn->query("DELETE FROM link_user_patient WHERE pid='$pid'");
-        if ($conn->affected_rows > 0){
-            $status='Success';
-            $info='删除成功！';
-        } else{
-            $status='Failed';
-            $info='执行失败！';
-            $log="失败：" . $conn->error;
+    $result = $conn->query("SELECT name,id_number,phone_number,gender,age FROM patient_profile WHERE pid='$pid'");
+    if ($result->num_rows < 1){
+        $status = 'Failed';
+        $info = '患者资料不存在！';
+    } else{
+        while($row = $result->fetch_assoc()){
+            $patientData = array(
+                'name' => $row['name'],
+                'id_number' => $row['id_number'],
+                'phone_number' => $row['phone_number'],
+                'gender' => $row['gender'],
+                'age' => $row['age']
+            );
         }
-    }  else{
-        $result = $conn->query("SELECT name,id_number,phone_number,gender,age FROM patient_profile WHERE pid='$pid'");
-        if ($result->num_rows < 1){
-            $status = 'Failed';
-            $info = '患者资料不存在！';
-        } else{
-            while($row = $result->fetch_assoc()){
-                $patientData = array(
-                    'name' => $row['name'],
-                    'id_number' => $row['id_number'],
-                    'phone_number' => $row['phone_number'],
-                    'gender' => $row['gender'],
-                    'age' => $row['age']
-                );
-            }
-            $status = 'Success';
-            $info = '数据获取成功！';
-        }
+        $status = 'Success';
+        $info = '数据获取成功！';
     }
 }
 $conn->close();

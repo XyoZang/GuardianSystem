@@ -11,8 +11,6 @@ $Request = $_POST['Request'];
 $uid = $_COOKIE['token'];
 $now_time = date("Y-m-d H:i:s");
 $pid = $_SESSION['pindex'.$_POST['pindex']];
-$status = 'Failed';
-$info = '请求参数错误！';
 if ($Request=='Insert') {
     //接收数据
     $name = $_POST['name'];
@@ -107,6 +105,9 @@ if ($Request=='Insert') {
         $info='删除失败！';
         $log="失败：" . mysqli_error($conn);
     }
+} else {
+    $status = 'Failed';
+    $info = '请求参数错误！';
 }
 $conn->close();
 //返回用户数据编辑状态信息给ajax

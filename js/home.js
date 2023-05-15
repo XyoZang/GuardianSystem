@@ -7,33 +7,18 @@ $(document).ready(function(){
         success: function(response) {
             // 处理服务器返回的数据
             console.log(response);
-            $("#userName").html(response['userName']);
-            $("#userEmail").html(response['userEmail']);
-            $("#name").html(response['name']);
-            $("#gender").html(response['gender']);
-            $("#phone_number").html(response['phone_number']);
-            $("#id_number").html(response['id_number']);
+            Msg(response, function() {
+                $("#userName").html(response['data']['userName']);
+                $("#userEmail").html(response['data']['userEmail']);
+                $("#name").html(response['data']['name']);
+                $("#gender").html(response['data']['gender']);
+                $("#phone_number").html(response['data']['phone_number']);
+                $("#id_number").html(response['data']['id_number']);
+            });
         },
         error: function(xhr, status, error) {
             console.log('Ajax连接失败');
         }
-    });
-    $("#btn_edit_profile").click(function(){
-        $(".show_profile").hide();
-        $(".edit_profile").show();
-        $("#btn_edit_profile").hide();
-        $("#btn_profile_submit_cancel").show();
-        //编辑时附带原本信息
-        $("#edit_name").val($("#name").html());
-        $("#edit_gender").val($("#gender").html());
-        $("#edit_phone_number").val($("#phone_number").html());
-        $("#edit_id_number").val($("#id_number").html());
-    });
-    $("#btn_cancel_profile").click(function(){
-        $(".edit_profile").hide();
-        $("#btn_profile_submit_cancel").hide();
-        $(".show_profile").show();
-        $("#btn_edit_profile").show();
     });
     //提交用户修改信息
     $("#btn_submit_profile").click(function(){
@@ -62,6 +47,25 @@ $(document).ready(function(){
             Qmsg.error("失败：请检查信息格式！");
         }
     })
+    //编辑按钮
+    $("#btn_edit_profile").click(function(){
+        $(".show_profile").hide();
+        $(".edit_profile").show();
+        $("#btn_edit_profile").hide();
+        $("#btn_profile_submit_cancel").show();
+        //编辑时附带原本信息
+        $("#edit_name").val($("#name").html());
+        $("#edit_gender").val($("#gender").html());
+        $("#edit_phone_number").val($("#phone_number").html());
+        $("#edit_id_number").val($("#id_number").html());
+    });
+    //取消编辑按钮
+    $("#btn_cancel_profile").click(function(){
+        $(".edit_profile").hide();
+        $("#btn_profile_submit_cancel").hide();
+        $(".show_profile").show();
+        $("#btn_edit_profile").show();
+    });
 });
 //校验手机号
 function phoneNumCheck(){
