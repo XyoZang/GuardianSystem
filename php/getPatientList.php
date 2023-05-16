@@ -13,7 +13,7 @@ if (!$conn) {
     $msg = "服务器连接失败！";
 } else{
     //根据token解码出uid用以查询
-    $uid = $_COOKIE["token"];
+    $uid = isNULL($_COOKIE["token"]);
     $result = $conn->query("SELECT pid FROM link_user_patient WHERE uid='$uid'");
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){

@@ -12,7 +12,7 @@ if (!$conn) {
     $status = "Failed";
     $msg = "服务器连接失败！";
 } else{
-    $pid = $_SESSION['pindex'.$_POST['pindex']];
+    $pid = isNULL($_SESSION['pindex'.$_POST['pindex']]);
     $result = $conn->query("SELECT name,id_number,phone_number,gender,age FROM patient_profile WHERE pid='$pid'");
     if ($result->num_rows < 1){
         $status = 'Failed';

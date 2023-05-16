@@ -12,11 +12,11 @@ if (!$conn) {
     $status = "Failed";
     $msg = "服务器连接失败！";
 } else{
-    $Request = $_POST['Request'];
+    $Request = isNULL($_POST['Request']);
     if ($Request=='Login'){
         //下面实现已有账号的登录功能
-        $loginAccount = $_POST['loginAccount'];
-        $password = $_POST['loginPswd'];
+        $loginAccount = isNULL($_POST['loginAccount']);
+        $password = isNULL($_POST['loginPswd']);
         //正则表达式判断登录方式为邮箱或用户名，并查询对应的密码
         //此正则表达式验证是否为邮箱格式
         $pattern = "/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/";

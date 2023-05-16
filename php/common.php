@@ -39,6 +39,12 @@ function generateSalt($len=6){
     return $salt;
 }
 
+//自动赋NULL
+function isNULL($e){
+    $e=$e?$e:NULL;
+    return $e;
+}
+
 //异常捕获函数
 function myException($exception) {
     $response = array(
