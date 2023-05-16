@@ -1,0 +1,70 @@
+<div class="card rounded-3 div_Account">
+    <div class="card-header">
+      资料
+    </div>
+    <div class="card-body shadow-sm">
+      <div class="show_profile">
+        <span>姓名：</span>
+        <span id="name"></span>
+        <br>
+        <span>性别：</span>
+        <span id="gender"></span>
+        <br>
+        <span>年龄：</span>
+        <span id="age"></span>
+        <br>
+        <span>身份证号：</span>
+        <span id="id_number"></span>
+        <br>
+        <span>电话号码：</span>
+        <span id="phone_number"></span>
+      </div>
+      <div class="edit_profile" style="display: none;">
+        <form id="formEditPatientProfile" onsubmit="return false;">
+          <h3>资料</h3>
+          <div class="mb-3 mt-3">
+              <label for="edit_name" class="form-label">姓&nbsp;&nbsp;&nbsp;名:</label>
+              <input type="text" class="form-control" id="edit_name" name="edit_name" required>
+          </div>
+          <div class="mb-3">
+              <label for="edit_gender" class="form-label">性&nbsp;&nbsp;&nbsp;别：</label>
+              <input type="text" class="form-control" id="edit_gender" name="edit_gender" required>
+          </div>
+          <div class="mb-3">
+            <label for="edit_age" class="form-label">年&nbsp;&nbsp;&nbsp;龄：</label>
+            <input type="text" class="form-control" id="edit_age" name="edit_age" required>
+          </div>
+          <div class="mb-3">
+              <label  for="edit_phone_number" class="form-label">电话号码</label>
+                  <input type="text" class="form-control"  id="edit_phone_number" name="edit_phone_number" onblur="phoneNumCheck()" required>
+                  <span id="phoneNumCheckSpan"  style="color: red"></span>
+          </div>
+          <div class="mb-3">
+              <label for="edit_id_number" class="form-label">身份证号</label>
+              <input type="text" class="form-control" id="edit_id_number" name="edit_id_number" readonly>
+              <span id="idNumCheckSpan"  style="color: red"></span>
+          </div>
+        </form>
+      </div>
+      <button class='btn btn-primary' type="button" id="btn_edit_profile">编辑</button>
+      <div id="btn_profile_submit_cancel" style="display: none;">
+        <button class="btn btn-primary" type="button" id="btn_submit_patient_profile">保存</button>
+        <button class="btn btn-primary" type="button" id="btn_cancel_profile">取消</button>
+      </div>
+    </div>
+    <!-- <div class="card-footer"></div> -->
+</div>
+<div class="container">
+    <h1 class="text-center">实时数据</h1>
+    <div class="row">
+        <div class="col-lg-6" id="eeg-chart"></div>
+        <div class="col-lg-6" id="pulse-chart"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6" id="ecg-chart"></div>
+        <div class="col-lg-6" id="bp-chart"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" id="spo2-chart"></div>
+    </div>
+</div>

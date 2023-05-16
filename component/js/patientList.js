@@ -1,25 +1,23 @@
-$(document).ready(function(){
-    //查询用户所绑定的监测人信息
-    updatePatient();
-    //添加监测人表单提交
-    $('#addPatientBtn').click(function() {
-        $.ajax({
-            url: '../php/editPatientProfile.php',
-            method: 'POST',
-            data: 'Request=Insert&'+$('#formAddPatient').serialize(),
-            dataType: 'json',
-            success: function(response) {
-                // 处理服务器返回的数据
-                console.log(response);
-                Msg(response, function() {
-                    $("#btnAddPatientCancel").click();
-                    updatePatient();
-                });
-            },
-            error: function(xhr, status, error) {
-                console.log('连接失败');
-            }
-        });
+//查询用户所绑定的监测人信息
+updatePatient();
+//添加监测人表单提交
+$('#addPatientBtn').click(function() {
+    $.ajax({
+        url: '../php/editPatientProfile.php',
+        method: 'POST',
+        data: 'Request=Insert&'+$('#formAddPatient').serialize(),
+        dataType: 'json',
+        success: function(response) {
+            // 处理服务器返回的数据
+            console.log(response);
+            Msg(response, function() {
+                $("#btnAddPatientCancel").click();
+                updatePatient();
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log('连接失败');
+        }
     });
 });
 //查询用户所绑定的监测人信息
@@ -47,7 +45,7 @@ function updatePatient(){
 }
 //传参并转至病人数据展示
 function toShowPage(index){
-    window.location.href = './data.html?pindex='+index;
+    window.location.href = '../user/#patientdata?pindex='+index;
 }
 //病人列表页面删除操作
 function deletePatient(index){

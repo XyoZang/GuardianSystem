@@ -1,71 +1,72 @@
-$(document).ready(function(){
-    $.ajax({
-        url: '../php/getPatientData.php',
-        method: 'POST',
-        data: window.location.search.substring(1),
-        dataType: 'json',
-        success: function(response) {
-            // 处理服务器返回的数据
-            console.log(response);
-            Msg(response, function(){
-                $("#name").html(response['data']['name']);
-                $("#gender").html(response['data']['gender']);
-                $("#age").html(response['data']['age']);
-                $("#id_number").html(response['data']['id_number']);
-                $("#phone_number").html(response['data']['phone_number']);
-            });
-        },
-        error: function(xhr, status, error) {
-            console.log('连接失败');
-        }
-    });
-    $("#btn_edit_profile").click(function(){
-        $(".show_profile").hide();
-        $(".edit_profile").show();
-        $("#btn_edit_profile").hide();
-        $("#btn_profile_submit_cancel").show();
-        //编辑时附带原本信息
-        $("#edit_name").val($("#name").html());
-        $("#edit_gender").val($("#gender").html());
-        $("#edit_age").val($("#age").html());
-        $("#edit_phone_number").val($("#phone_number").html());
-        $("#edit_id_number").val($("#id_number").html());
-    });
-    $("#btn_cancel_profile").click(function(){
-        $(".edit_profile").hide();
-        $("#btn_profile_submit_cancel").hide();
-        $(".show_profile").show();
-        $("#btn_edit_profile").show();
-    });
-    //提交用户修改信息
-    $("#btn_submit_patient_profile").click(function(){
-        if (phoneNumCheck()){
-            $.ajax({
-                url: '../php/editPatientProfile.php',
-                method: 'POST',
-                data: 'Request=Edit&'+window.location.search.substring(1)+'&'+$('#formEditPatientProfile').serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    // 处理服务器返回的数据
-                    console.log(response);
-                    Msg(response, function() {
-                        $("#btn_cancel_profile").click();
-                        $("#name").html($("#edit_name").val());
-                        $("#age").html($("#edit_age").val());
-                        $("#gender").html($("#edit_gender").val());
-                        $("#phone_number").html($("#edit_phone_number").val());
-                        $("#id_number").html($("#edit_id_number").val());
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.log('Ajax连接失败');
-                }
-            });
-        } else{
-            Qmsg.error("失败：请检查信息格式！");
-        }
-    })
+/******** main ********/
+$.ajax({
+    url: '../php/getPatientData.php',
+    method: 'POST',
+    data: window.location.hash.match(/\?(.*)/)[1],
+    dataType: 'json',
+    success: function(response) {
+        // 处理服务器返回的数据
+        console.log(response);
+        Msg(response, function(){
+            $("#name").html(response['data']['name']);
+            $("#gender").html(response['data']['gender']);
+            $("#age").html(response['data']['age']);
+            $("#id_number").html(response['data']['id_number']);
+            $("#phone_number").html(response['data']['phone_number']);
+        });
+    },
+    error: function(xhr, status, error) {
+        console.log('连接失败');
+    }
 });
+$("#btn_edit_profile").click(function(){
+    $(".show_profile").hide();
+    $(".edit_profile").show();
+    $("#btn_edit_profile").hide();
+    $("#btn_profile_submit_cancel").show();
+    //编辑时附带原本信息
+    $("#edit_name").val($("#name").html());
+    $("#edit_gender").val($("#gender").html());
+    $("#edit_age").val($("#age").html());
+    $("#edit_phone_number").val($("#phone_number").html());
+    $("#edit_id_number").val($("#id_number").html());
+});
+$("#btn_cancel_profile").click(function(){
+    $(".edit_profile").hide();
+    $("#btn_profile_submit_cancel").hide();
+    $(".show_profile").show();
+    $("#btn_edit_profile").show();
+});
+//提交用户修改信息
+$("#btn_submit_patient_profile").click(function(){
+    if (phoneNumCheck()){
+        $.ajax({
+            url: '../php/editPatientProfile.php',
+            method: 'POST',
+            data: 'Request=Edit&'+window.location.hash.match(/\?(.*)/)[1]+'&'+$('#formEditPatientProfile').serialize(),
+            dataType: 'json',
+            success: function(response) {
+                // 处理服务器返回的数据
+                console.log(response);
+                Msg(response, function() {
+                    $("#btn_cancel_profile").click();
+                    $("#name").html($("#edit_name").val());
+                    $("#age").html($("#edit_age").val());
+                    $("#gender").html($("#edit_gender").val());
+                    $("#phone_number").html($("#edit_phone_number").val());
+                    $("#id_number").html($("#edit_id_number").val());
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log('Ajax连接失败');
+            }
+        });
+    } else{
+        Qmsg.error("失败：请检查信息格式！");
+    }
+})
+
+/******** 函数定义 ********/
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1);
     var vars = query.split("&");
@@ -91,28 +92,28 @@ function phoneNumCheck(){
     }
 }
 //定义一个函数，用于获取并更新数据
-// function updateData() {
-//     $.ajax({
-//         url: '../php/show.php', // 替换为你的 PHP 后端地址
-//         method: 'GET',
-//         dataType: 'json',
-//         success: function(response) {
-//             eegChart.setOption({
-//                 xAxis: {},
-//                 series: [
-//                 {
-//                     name: '脑电',
-//                     data: response['脑电数据']
-//                 }
-//                 ]
-//             });
+function updateData() {
+    $.ajax({
+        url: '../php/show.php', // 替换为你的 PHP 后端地址
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            eegChart.setOption({
+                xAxis: {},
+                series: [
+                {
+                    name: '脑电',
+                    data: response['脑电数据']
+                }
+                ]
+            });
 
-//         },
-//         error: function(xhr, status, error) {
-//             console.log('获取数据失败');
-//         }
-//     });
-// }
+        },
+        error: function(xhr, status, error) {
+            console.log('获取数据失败');
+        }
+    });
+}
 
 // 模拟数据
 var data = [];

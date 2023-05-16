@@ -84,3 +84,8 @@ $('#loginBtn').click(function() {
         Qmsg.error("请输入用户名！");
     }
 });
+if (getLoginStatus()){
+    $(".loginTrue").show();
+} else {
+    $(".loginFalse").show();
+}
