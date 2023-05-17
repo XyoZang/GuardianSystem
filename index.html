@@ -83,28 +83,60 @@
     
             <!-- 模态框内容 -->
             <div class="modal-body">
-                <form id="formRegist" onsubmit="return false;">
-                    <h3>用户信息</h3>
-                    <div class="mb-3 mt-3">
-                        <label for="userName" class="form-label">用户名:</label>
-                        <input type="text" class="form-control" id="userName" placeholder="请输入用户名" name="userName" required>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab-regist" role="tablist">
+                        <button class="nav-link active" id="nav-user-tab" data-bs-toggle="tab" data-bs-target="#nav-user" type="button" role="tab" aria-controls="nav-user" aria-selected="true">普通用户</button>
+                        <button class="nav-link" id="nav-doctor-tab" data-bs-toggle="tab" data-bs-target="#nav-doctor" type="button" role="tab" aria-controls="nav-doctor" aria-selected="false">医护人员</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="userPswd" class="form-label">密&nbsp;&nbsp;&nbsp;码:</label>
-                        <input type="password" class="form-control" id="userPswd" placeholder="请输入密码" name="userPswd" onblur="pswdCheck()" required>
-                        <span id="pswdCheckSpan"  style="color: red"></span>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-user" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <form id="formRegist" onsubmit="return false;">
+                            <div class="mb-3 mt-3">
+                                <label for="userName" class="form-label">用户名:</label>
+                                <input type="text" class="form-control" id="userName" placeholder="请输入用户名" name="userName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userPswd" class="form-label">密&nbsp;&nbsp;&nbsp;码:</label>
+                                <input type="password" class="form-control" id="userPswd" placeholder="请输入密码" name="userPswd" onblur="pswdCheck()" required>
+                                <span id="pswdCheckSpan"  style="color: red"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label  for="userPswdConf" class="form-label">确认密码：</label>
+                                    <input type="password" class="form-control"  id="userPswdConf" placeholder="请再次输入密码" onblur="pswdConf()" required="required">
+                                    <span id="pswdConfSpan"  style="color: red"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userEmail" class="form-label">邮&nbsp;&nbsp;&nbsp;箱:</label>
+                                <input type="text" class="form-control" id="userEmail" placeholder="请输入电子邮箱" name="userEmail" onblur="emailCheck()" required>
+                                <span id="emailCheckSpan"  style="color: red"></span>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label  for="userPswdConf" class="form-label">确认密码：</label>
-                            <input type="password" class="form-control"  id="userPswdConf" placeholder="请再次输入密码" onblur="pswdConf()" required="required">
-                            <span id="pswdConfSpan"  style="color: red"></span>
+                    <div class="tab-pane fade" id="nav-doctor" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <form id="formRegist" onsubmit="return false;">
+                            <div class="mb-3 mt-3">
+                                <label for="userName" class="form-label">用户名:</label>
+                                <input type="text" class="form-control" id="userName" placeholder="请输入用户名" name="userName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userPswd" class="form-label">密&nbsp;&nbsp;&nbsp;码:</label>
+                                <input type="password" class="form-control" id="userPswd" placeholder="请输入密码" name="userPswd" onblur="pswdCheck()" required>
+                                <span id="pswdCheckSpan"  style="color: red"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label  for="userPswdConf" class="form-label">确认密码：</label>
+                                    <input type="password" class="form-control"  id="userPswdConf" placeholder="请再次输入密码" onblur="pswdConf()" required="required">
+                                    <span id="pswdConfSpan"  style="color: red"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userEmail" class="form-label">邮&nbsp;&nbsp;&nbsp;箱:</label>
+                                <input type="text" class="form-control" id="userEmail" placeholder="请输入电子邮箱" name="userEmail" onblur="emailCheck()" required>
+                                <span id="emailCheckSpan"  style="color: red"></span>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label">邮&nbsp;&nbsp;&nbsp;箱:</label>
-                        <input type="text" class="form-control" id="userEmail" placeholder="请输入电子邮箱" name="userEmail" onblur="emailCheck()" required>
-                        <span id="emailCheckSpan"  style="color: red"></span>
-                    </div>
-                </form>
+                </div>
             </div>
     
             <!-- 模态框底部 -->

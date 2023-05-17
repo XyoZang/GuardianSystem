@@ -12,7 +12,7 @@ if (!$conn) {
     $status = "Failed";
     $msg = "服务器连接失败！";
 } else{
-    $pid = isNULL($_SESSION['pindex'.$_POST['pindex']]);
+    $pid = inputNULL($_SESSION['pindex'.$_POST['pindex']]);
     $result = $conn->query("SELECT name,id_number,phone_number,gender,age FROM patient_profile WHERE pid='$pid'");
     if ($result->num_rows < 1){
         $status = 'Failed';
@@ -20,11 +20,11 @@ if (!$conn) {
     } else{
         while($row = $result->fetch_assoc()){
             $patientData = array(
-                'name' => $row['name'],
-                'id_number' => $row['id_number'],
-                'phone_number' => $row['phone_number'],
-                'gender' => $row['gender'],
-                'age' => $row['age']
+                'name' => outputNULL($row['name']),
+                'id_number' => outputNULL($row['id_number']),
+                'phone_number' => outputNULL($row['phone_number']),
+                'gender' => outputNULL($row['gender']),
+                'age' => outputNULL($row['age'])
             );
         }
         $status = 'Success';

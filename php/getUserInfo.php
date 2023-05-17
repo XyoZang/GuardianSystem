@@ -12,7 +12,7 @@ if (!$conn) {
     $msg = "服务器连接失败！";
 } else{
     //根据token解码出uid用以查询
-    $uid = isNULL($_COOKIE["token"]);
+    $uid = inputNULL($_COOKIE["token"]);
     $reAccount = $conn->query("SELECT user_name, email FROM user_account WHERE uid='$uid'");
     $reProfile = $conn->query("SELECT name, gender, phone_number, id_number FROM user_profile WHERE uid='$uid'");
     // 将查询结果赋值给变量
@@ -26,16 +26,16 @@ if (!$conn) {
         $rowP = $reProfile->fetch_assoc();
     }
     $userInfo = array (
-        'userName' => $rowA["user_name"],
-        'userEmail' => $rowA["email"],
-        'name' => $rowP["name"],
-        'gender' => $rowP["gender"],
-        'phone_number' => $rowP["phone_number"],
-        'id_number' => $rowP["id_number"]
+        'userName' => outputNULL($rowA["user_name"]),
+        'userEmail' => outputNULL($rowA["email"]),
+        'name' => outputNULL($rowP["name"]),
+        'gender' => outputNULL($rowP["gender"]),
+        'phone_number' => outputNULL($rowP["phone_number"]),
+        'id_number' => outputNULL($rowP["id_number"])
     );
 }
 $conn->close();
-//返回用户登录状态信息给ajax
+//返回用户信息给ajax
 $response = array(
     'status' => $status,
     "msg" => $msg,

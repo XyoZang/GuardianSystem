@@ -12,9 +12,9 @@ if (!$conn) {
     $msg = "服务器连接失败！";
 } else{
     // Insert data into database
-    $userName = isNULL($_POST['userName']);
-    $userPswd = isNULL($_POST['userPswd']);
-    $userEmail = isNULL($_POST['userEmail']);
+    $userName = inputNULL($_POST['userName']);
+    $userPswd = inputNULL($_POST['userPswd']);
+    $userEmail = inputNULL($_POST['userEmail']);
     // 执行 SQL 查询语句，获取所有已录入的家属和被监护者的身份证号
     $result1 = $conn->query("SELECT user_name, email FROM user_account");
     // 存储所有已录入的家属和被监护者的身份证号

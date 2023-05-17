@@ -12,10 +12,10 @@ if (!$conn) {
     $msg = "服务器连接失败！";
 } else{
     //接收数据
-    $name = isNULL($_POST['edit_name']);
-    $gender = isNULL($_POST['edit_gender']);
-    $phone_number = isNULL($_POST['edit_phone_number']);
-    $id_number = isNULL($_POST['edit_id_number']);
+    $name = inputNULL($_POST['edit_name']);
+    $gender = inputNULL($_POST['edit_gender']);
+    $phone_number = inputNULL($_POST['edit_phone_number']);
+    $id_number = inputNULL($_POST['edit_id_number']);
     $now_time = date("Y-m-d H:i:s");
     //根据token解码出uid用以查询
     $uid = $_COOKIE["token"];

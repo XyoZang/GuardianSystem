@@ -13,11 +13,12 @@ if (!$conn) {
     $msg = "服务器连接失败！";
 } else{
     //根据token解码出uid用以查询
-    $uid = isNULL($_COOKIE["token"]);
+    $uid = inputNULL($_COOKIE["token"]);
     $result = $conn->query("SELECT pid FROM link_user_patient WHERE uid='$uid'");
     // 将查询结果赋值给变量
     if ($result->num_rows < 1){
         $status = "Failed";
+        $type = "Warning";
         $msg = "查询失败或尚未绑定监测人！";
     } else{
         $pidList = array();
@@ -36,9 +37,9 @@ if (!$conn) {
                 $msg = "查询成功";
                 while ($r = $re->fetch_assoc()) {
                     $patientList[] = array(
-                        'pid' => $pid,
-                        'name' => $r["name"],
-                        'age' => $r['age']
+                        'pid' => outputNULL($pid),
+                        'name' => outputNULL($r["name"]),
+                        'age' => outputNULL($r['age'])
                     );
                 }
                 $pindex += 1;
@@ -52,6 +53,7 @@ $conn->close();
 $response = array(
     'status' => $status,
     "msg" => $msg,
+    "type" => $type,
     'data' => $patientList
 );
 echo json_encode($response);

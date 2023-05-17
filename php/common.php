@@ -39,9 +39,15 @@ function generateSalt($len=6){
     return $salt;
 }
 
-//自动赋NULL
-function isNULL($e){
+//输入时将空值自动赋NULL
+function inputNULL($e){
     $e=$e?$e:NULL;
+    return $e;
+}
+
+//输出时将空值转换为空字符串
+function outputNULL($e){
+    $e=$e?$e:'';
     return $e;
 }
 

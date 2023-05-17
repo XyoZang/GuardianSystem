@@ -5,16 +5,22 @@
 var login;
 loadPage();
 
-// 监听URL更新
+//监听URL更新
 window.addEventListener("hashchange", Refresh);
 
-// 地址栏聚焦变色
+//侧边栏聚焦变色
 $('.nav-pills .nav-link').hover(function() {
     $(this).addClass('active');
 }, function() {
     if (!$(this).is($(".fix"))) {
         $(this).removeClass('active');
     }
+});
+
+//侧边栏折叠
+$("#sidebarCollapse").click(function(){
+    $('.side_collapse').toggle();
+    $(".toggle-width").toggleClass('sidebar-icon-only');
 });
 
 /********* 函数定义 **********/
@@ -24,7 +30,6 @@ function Refresh(){
 function loadPage(){
     if (getLoginStatus()){
         $(".loginTrue").show();
-        console.log("loadPage");
         if ($("#include").length){
             location.reload();
         } else{
@@ -39,9 +44,7 @@ function loadPage(){
             $(".holyGrail-content").load(pathn); //加载相对应的内容
             // 给侧边栏添加 active 类
             $('.nav-pills .nav-item').eq(i).find('.nav-link').addClass('active fix');
-            loadJS(pathjs, function() {
-                console.log("loadJS");
-            });
+            loadJS(pathjs, function() {});
         }
     } else{
         $(".loginFalse").show();
@@ -50,7 +53,7 @@ function loadPage(){
         }
     }
 }
-function loadJS(url, callback) {
+function loadJS(url, callback=null) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.id = "include";
@@ -70,8 +73,4 @@ function loadJS(url, callback) {
   
     script.src = url;
     document.getElementsByTagName('head')[0].appendChild(script);
-}
-function toggleSide(){
-    $('.side_collapse').toggle();
-    $(".toggle-width").toggleClass('sidebar-icon-only');
 }

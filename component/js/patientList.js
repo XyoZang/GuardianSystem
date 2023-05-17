@@ -2,23 +2,37 @@
 updatePatient();
 //添加监测人表单提交
 $('#addPatientBtn').click(function() {
-    $.ajax({
-        url: '../php/editPatientProfile.php',
-        method: 'POST',
-        data: 'Request=Insert&'+$('#formAddPatient').serialize(),
-        dataType: 'json',
-        success: function(response) {
-            // 处理服务器返回的数据
-            console.log(response);
-            Msg(response, function() {
-                $("#btnAddPatientCancel").click();
-                updatePatient();
-            });
-        },
-        error: function(xhr, status, error) {
-            console.log('连接失败');
-        }
-    });
+    if (phoneNumCheck('#phone_number',true) && idNumCheck('#id_number',false)){
+        $.ajax({
+            url: '../php/editPatientProfile.php',
+            method: 'POST',
+            data: 'Request=Insert&'+$('#formAddPatient').serialize(),
+            dataType: 'json',
+            success: function(response) {
+                // 处理服务器返回的数据
+                console.log(response);
+                Msg(response, function() {
+                    $("#btnAddPatientCancel").click();
+                    updatePatient();
+                }, function() {
+                    if (response['log']=='Continue') {
+                        $("#ContinueInfo").show();
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log('连接失败');
+            }
+        });
+    } else {
+        Qmsg.error("错误：请检查所填信息！");
+    }
+});
+$("#phone_number").blur(function(){
+    phoneNumCheck(this, true);
+});
+$("#id_number").blur(function(){
+    idNumCheck(this, false);
 });
 //查询用户所绑定的监测人信息
 function updatePatient(){

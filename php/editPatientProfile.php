@@ -7,19 +7,20 @@ set_exception_handler('myException');
 // 创建与 MySQL 数据库的连接
 $conn = linkDB();
 
-$Request = isNULL($_POST['Request']);
-$uid = isNULL($_COOKIE['token']);
+$Request = inputNULL($_POST['Request']);
+$uid = inputNULL($_COOKIE['token']);
 $now_time = date("Y-m-d H:i:s");
-$pid = isNULL($_SESSION['pindex'.$_POST['pindex']]);
+$pid = inputNULL($_SESSION['pindex'.$_POST['pindex']]);
 switch ($Request) {
     case "Insert": /******************************/
         //接收数据
-        $name = isNULL($_POST['name']);
-        $id_number = isNULL($_POST['id_number']);
-        $phone_number = isNULL($_POST['phone_number']);
-        $gender = isNULL($_POST['gender']);
-        $age = isNULL($_POST['age']);
-        $relation = isNULL($_POST['relation']);
+        $name = inputNULL($_POST['name']);
+        $id_number = inputNULL($_POST['id_number']);
+        //资料数据
+        $phone_number = inputNULL($_POST['phone_number']);
+        $gender = inputNULL($_POST['gender']);
+        $age = inputNULL($_POST['age']);
+        $relation = inputNULL($_POST['relation']);
         //先根据用户输入的ID号码查询病人库中是否存在该病人
         $result = $conn->query("SELECT pid FROM patient_profile WHERE id_number='$id_number'");
         if ($result->num_rows>0){
@@ -39,15 +40,15 @@ switch ($Request) {
             $stmt1->bind_param("ssiisis", $pid, $name, $id_number, $phone_number, $gender, $age, $now_time);
             $stmt2->bind_param("ssss", $pid, $uid, $relation, $now_time);
             $stmt1->execute();
-            $error1 = mysqli_error($conn);
             $stmt2->execute();
             if ($stmt1->affected_rows > 0 && $stmt2->affected_rows > 0){
                 $status = "Success";
                 $msg = "保存成功！";
             }else{
                 $status = "Failed";
-                $msg = "数据插入失败！";
-                $log = "Error: " . mysqli_error($conn) . $error1;
+                $type = "Warning";
+                $msg = "资料不存在，请继续完善资料！";
+                $log = "Continue";
             }
             $stmt1->close();
             $stmt2->close();
@@ -59,16 +60,17 @@ switch ($Request) {
                 $conn->query("INSERT INTO link_user_patient (pid, uid, relation, create_time) VALUES ('$pid', '$uid', '$relation', '$now_time')");
                 if ($conn->affected_rows > 0){
                     $status = "Success";
-                    $msg = "保存成功！";
+                    $msg = "病人资料已存在！";
                 } else {
                     $status = "Failed";
                     $msg = "数据插入失败！";
                 }
+            //若已绑定则不进行操作，提示用户绑定重复
             } else {
                 $status = "Failed";
+                $type = "Warning";
                 $msg = "请勿重复绑定！";
             }
-            //若已绑定则不进行操作，提示用户绑定重复
         } else {
             $status = "Failed";
             $msg = "未知错误！";
@@ -76,10 +78,10 @@ switch ($Request) {
         break;
     case "Edit": /******************************/
         if (isset($pid)){
-            $name = isNULL($_POST['edit_name']);
-            $phone_number = isNULL($_POST['edit_phone_number']);
-            $gender = isNULL($_POST['edit_gender']);
-            $age = isNULL($_POST['edit_age']);
+            $name = inputNULL($_POST['edit_name']);
+            $phone_number = inputNULL($_POST['edit_phone_number']);
+            $gender = inputNULL($_POST['edit_gender']);
+            $age = inputNULL($_POST['edit_age']);
             $sql = "UPDATE patient_profile SET name = ?, phone_number = ?, gender = ?, age = ?, update_time = ? WHERE pid = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sisiss", $name, $phone_number, $gender, $age, $now_time, $pid);
@@ -95,7 +97,7 @@ switch ($Request) {
             $stmt->close();
         } else {
             $status = "Failed";
-            $msg = "资料不存在！";
+            $msg = "该患者资料不存在！";
         }
         break;
     case "Delete": /******************************/
@@ -118,6 +120,7 @@ $conn->close();
 //返回用户数据编辑状态信息给ajax
 $response = array(
     'status' => $status,
+    'type' => $type,
     'msg' => $msg,
     "log" => $log,
 );
