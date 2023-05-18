@@ -38,32 +38,35 @@ function emailCheck(){
 }
 //注册表单提交
 $('#registBtn').click(function() {
-    if (pswdCheck() && pswdConf() && emailCheck()){
-        $.ajax({
-            url: '../php/regist.php',
-            method: 'POST',
-            data: $('#formRegist').serialize(),
-            dataType: 'json',
-            success: function(response) {
-                // 处理服务器返回的数据
-                console.log(response);
-                Msg(response, function() {
+    var activeForm = $('#nav-tabContent').find('.active').find('.formRegist');
+    console.log(activeForm.serialize());
+    $.ajax({
+        url: '../php/getAccount.php',
+        method: 'POST',
+        data: 'Request=Regist&'+activeForm.serialize(),
+        dataType: 'json',
+        success: function(response) {
+            // 处理服务器返回的数据
+            console.log(response);
+            Msg(response, function() {
+                if (response['log']=="Continue") {
+                    $("#ContinueInfo").show();
+                } else {
                     $("#registModalDismiss").click();
-                });
-            },
-            error: function(xhr, status, error) {
-                console.log('连接失败');
-            }
-        });
-    } else{
-        Qmsg.error("失败：请检查信息格式！");
-    }
+                    $("#ContinueInfo").hide();
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.log('连接失败');
+        }
+    });
 });
 //登录表单提交
 $('#loginBtn').click(function() {
     if ($("#loginAccount").val()){
         $.ajax({
-            url: '../php/getLoginStatus.php',
+            url: '../php/getAccount.php',
             method: 'POST',
             data: 'Request=Login&'+$('#formLogin').serialize(),
             dataType: 'json',

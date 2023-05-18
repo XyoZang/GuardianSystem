@@ -1,6 +1,6 @@
 function getLoginStatus(){
     $.ajax({
-        url: '../php/getLoginStatus.php',
+        url: '../php/getAccount.php',
         method: 'POST',
         async: false,
         data: 'Request=getStatus',
