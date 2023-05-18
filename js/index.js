@@ -77,6 +77,11 @@ $('#loginBtn').click(function() {
                     $(".loginFalse").hide();
                     $(".loginTrue").show();
                     $("#loginModalDismiss").click();
+                    if (response['data']=='user') {
+                        $("#consoleHref").attr("href", "./user/#info");
+                    } else if (response['data']=='doctor') {
+                        $("#consoleHref").attr("href", "./data/#info");
+                    }
                 });
             },
             error: function(xhr, status, error) {
@@ -87,8 +92,13 @@ $('#loginBtn').click(function() {
         Qmsg.error("请输入用户名！");
     }
 });
-if (getLoginStatus()){
+var login_status = getLoginStatus();
+if (login_status=='user') {
     $(".loginTrue").show();
+    $("#consoleHref").attr("href", "./user/#info");
+} else if (login_status=='doctor') {
+    $(".loginTrue").show();
+    $("#consoleHref").attr("href", "./data/#info");
 } else {
     $(".loginFalse").show();
 }

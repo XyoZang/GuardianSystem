@@ -145,6 +145,7 @@ if (!$conn) {
                     $role = $ro["role"];
                     $_SESSION['id'] = $id;
                     $_SESSION['role'] = $role;
+                    $data = $role;
                 }else{
                     $status = "Failed";
                     $msg = "密码错误！";
@@ -158,10 +159,10 @@ if (!$conn) {
             break;
         case "getStatus": /*************************/
             //查询uid是否存在来判定
-            if (isset($_SESSION['id'])){
+            if (isset($_SESSION['id'])&&isset($_SESSION['role'])){
                 $status = 'Success';
-                $data = 'Login';
-            } else{
+                $data = inputNULL($_SESSION['role']);
+            } else {
                 $status = 'Success';
                 $data = 'LogOut';
             }

@@ -1,3 +1,4 @@
+var login;
 function getLoginStatus(){
     $.ajax({
         url: '../php/getAccount.php',
@@ -8,8 +9,8 @@ function getLoginStatus(){
         success: function(response) {
             // 处理服务器返回的数据
             console.log(response);
-            if (response['data']=='Login'){
-                login = true;
+            if (response['data']!=null && response['data']!='LogOut'){
+                login = response['data'];
             }else if (response['data']=='LogOut'){
                 login = false
             }
@@ -22,7 +23,7 @@ function getLoginStatus(){
 }
 function logOut(){
     $.ajax({
-        url: '../php/getLoginStatus.php',
+        url: '../php/getAccount.php',
         method: 'POST',
         data: 'Request=LogOut',
         dataType: 'json',
@@ -30,7 +31,6 @@ function logOut(){
             // 处理服务器返回的数据
             console.log(response);
             Msg(response, function() {
-                $.removeCookie('token', {path: '/'});
                 window.location.href = '/';
             });
         },
