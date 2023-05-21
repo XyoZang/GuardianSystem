@@ -45,7 +45,7 @@ function loadPage(){
             } else if (login_status=='doctor') {
                 switch(window.location.hash.replace(/\?.*/, '')){
                     case "#userhome": pathn = "user_center.html"; pathjs = "../component/js/userHome.js"; i = 0; break;
-                    case "#info": pathn = "../component/doctor/doctorInfo.html"; pathjs = "../component/doctor/js/userInfo.js"; i = 1; break;
+                    case "#info": pathn = "../component/doctor/doctorInfo.html"; pathjs = "../component/doctor/js/doctorInfo.js"; i = 1; break;
                     case "#patientlist": pathn = "../component/doctor/patientList.html"; pathjs = "../component/doctor/js/patientList.js"; i = 2; break;
                     case "#patientdata": pathn = "../component/doctor/patientData.html"; pathjs = "../component/doctor/js/patientData.js"; i = 2; break;
                     default: pathn = "user_center.html"; pathjs = "../component/doctor/userInfo.js"; i = 0; break;
