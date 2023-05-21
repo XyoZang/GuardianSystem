@@ -1,5 +1,5 @@
 <?php
-
+//可以考虑更改文件名“getUer/DoctorInfo”
 include 'common.php';
 
 // 创建与 MySQL 数据库的连接
@@ -12,9 +12,14 @@ if (!$conn) {
     $msg = "服务器连接失败！";
 } else{
     //根据token解码出uid用以查询
-    $uid = inputNULL($_COOKIE["token"]);
-    $reAccount = $conn->query("SELECT user_name, email FROM user_account WHERE uid='$uid'");
-    $reProfile = $conn->query("SELECT name, gender, phone_number, id_number FROM user_profile WHERE uid='$uid'");
+    $id = inputNULL($_COOKIE["token"]);
+    $reAccount = $conn->query("SELECT user_name, email FROM sys_account WHERE id='$id'");
+    //---------------------------------------------------------------------------------------------------------------------------
+    //此处应该有if语句，如果角色为用户则：
+    $reProfile = $conn->query("SELECT name, gender, phone_number, id_number FROM user_profile WHERE uid='$id'");
+    //此处应该有else语句，如果角色为医生则：
+    $reProfile = $conn->query("SELECT name, age, gender, title, department, mid, comment FROM doctor_profile WHERE rid='$id'");
+    //---------------------------------------------------------------------------------------------------------------------------
     // 将查询结果赋值给变量
     if ($reAccount->num_rows < 1){
         $status = "Failed";
@@ -25,6 +30,8 @@ if (!$conn) {
         $rowA = $reAccount->fetch_assoc();
         $rowP = $reProfile->fetch_assoc();
     }
+    //---------------------------------------------------------------------------------------------------------------------------
+    //此处应该有if语句，如果角色为用户则：
     $userInfo = array (
         'userName' => outputNULL($rowA["user_name"]),
         'userEmail' => outputNULL($rowA["email"]),
@@ -33,6 +40,19 @@ if (!$conn) {
         'phone_number' => outputNULL($rowP["phone_number"]),
         'id_number' => outputNULL($rowP["id_number"])
     );
+    //此处应该有else语句，如果角色为医生则：
+    $userInfo = array (
+        'userName' => outputNULL($rowA["user_name"]),
+        'userEmail' => outputNULL($rowA["email"]),
+        'name' => outputNULL($rowP["name"]),
+        'age' => outputNULL($rowP["age"]),
+        'gender' => outputNULL($rowP["gender"]),
+        'title' => outputNULL($rowP["title"]),
+        'department' => outputNULL($rowP["department"]),
+        'mid' => outputNULL($rowP["mid"]),
+        'comment' => outputNULL($rowP["comment"])
+    );
+    //---------------------------------------------------------------------------------------------------------------------------
 }
 $conn->close();
 //返回用户信息给ajax

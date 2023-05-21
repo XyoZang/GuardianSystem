@@ -5,9 +5,11 @@ session_start();
 set_exception_handler('myException');
 
 /**
+ * 
  * 账号管理文件
  * 包括注册、登录、登出、查询登陆状态
  * Request有 Regist、Login、LogOut、getStatus
+ * 
  */
 
 // 创建与 MySQL 数据库的连接
